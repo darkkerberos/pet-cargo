@@ -21,3 +21,9 @@
   background-color: #f8f9fa; /* biar ruang kosongnya warna netral */
   padding: 5px;
 }
+#contact a:hover {
+  color: #0d6efd;
+}
+#contact iframe {
+  border-radius: 10px;
+}
