@@ -1,0 +1,23 @@
+.hero {
+  background: url("../img/cat-with-people.jpg") center center/cover no-repeat;
+  height: 100vh;
+  position: relative;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.hero .container {
+  position: relative;
+  z-index: 2;
+}
+.card > img {
+    width: 100%;
+  height: 220px;
+  object-fit: contain; /* tampil penuh tanpa terpotong, tapi bisa ada ruang kosong */
+  background-color: #f8f9fa; /* biar ruang kosongnya warna netral */
+  padding: 5px;
+}
