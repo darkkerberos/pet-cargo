@@ -4,15 +4,12 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "setup": "pnpm i && dfx canister create backend && dfx generate backend && dfx deploy",
-    "start": "vite --port 3000",
-    "prebuild": "dfx generate backend",
-    "build:skip-bindings": "vite build && pnpm copy:env",
-    "copy:env": "cp env.json dist/",
-    "typescript-check": "tsc --noEmit --pretty",
-    "format": "prettier --write \"src/**/*.{json,js,jsx,ts,tsx,css,scss}\"",
-    "lint": "eslint src --ext .ts,.tsx,.js,.jsx",
-    "lint:fix": "eslint src --ext .ts,.tsx,.js,.jsx --fix"
+    "build": "vite build",
+    "predeploy": "pnpm run build",
+    "deploy": "gh-pages -d dist",
+    "dev": "vite --port 3000",
+    "preview": "vite preview",
+    "lint": "eslint . --ext .ts,.tsx --fix"
   },
   "devDependencies": {
     "@eslint/js": "~9.27.0",
@@ -35,6 +32,7 @@
     "eslint-plugin-react": "~7.37.5",
     "eslint-plugin-react-hooks": "~5.2.0",
     "eslint-plugin-tailwindcss": "~3.18.2",
+    "gh-pages": "^6.3.0",
     "globals": "~16.2.0",
     "postcss": "^8.4.41",
     "tailwindcss": "^3.4.17",

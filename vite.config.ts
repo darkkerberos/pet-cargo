@@ -4,6 +4,7 @@ import { defineConfig } from 'vite';
 import environment from 'vite-plugin-environment';
 
 export default defineConfig({
+    base: '/pet-cargo/',
     logLevel: 'error',
     build: {
         emptyOutDir: true,
