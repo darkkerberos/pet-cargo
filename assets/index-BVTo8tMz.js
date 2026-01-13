@@ -15290,7 +15290,7 @@ const Header = () => {
             /* @__PURE__ */ jsxRuntimeExports.jsx(
               "img",
               {
-                src: "/assets/logo_pet_cargo.png",
+                src: "assets/logo_pet_cargo.png",
                 alt: "Darin Pet's Transport",
                 className: "h-20 object-contain"
               }
@@ -15409,7 +15409,7 @@ const Hero = () => {
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           "img",
           {
-            src: "/assets/generated/hero-pets.dim_800x600.jpg",
+            src: "assets/generated/hero-pets.dim_800x600.jpg",
             alt: "Happy pets ready for transport",
             className: "w-full h-auto object-cover"
           }
@@ -15832,7 +15832,7 @@ const Advantages = () => {
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex items-start gap-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
           "img",
           {
-            src: "/assets/generated/harga-bersahabat-2.png",
+            src: "assets/generated/harga-bersahabat-2.png",
             alt: "Transport Vehicle",
             className: "w-full h-48 object-cover rounded-lg"
           }
@@ -15846,7 +15846,7 @@ const Advantages = () => {
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex items-start gap-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
           "img",
           {
-            src: "/assets/generated/happy-customer.dim_400x300.jpg",
+            src: "assets/generated/happy-customer.dim_400x300.jpg",
             alt: "Happy Customer",
             className: "w-full h-48 object-cover rounded-lg"
           }
@@ -16127,7 +16127,7 @@ const Footer = () => {
             /* @__PURE__ */ jsxRuntimeExports.jsx(
               "img",
               {
-                src: "/assets/generated/company-logo-transparent.dim_200x200.png",
+                src: "assets/generated/company-logo-transparent.dim_200x200.png",
                 alt: "DARIN PET'S TRANSPORT Logo",
                 className: "h-10 w-10 object-contain"
               }
