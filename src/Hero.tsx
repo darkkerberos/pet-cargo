@@ -16,7 +16,7 @@ const Hero = () => {
   };
 
   return (
-    <section id="beranda" className="relative min-h-screen flex items-center bg-gradient-header pt-20">
+    <section id="beranda" className="relative min-h-screen flex items-center bg-gradient-hero pt-20">
       <div className="absolute inset-0 bg-black/30" />
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center">

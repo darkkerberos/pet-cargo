@@ -11,40 +11,36 @@ body {
 
 @layer base {
     :root {
-        --radius: 0.625rem;
-        --background: 0.98 0 0;
-        --foreground: 0.145 0 0;
-        --card: 1 0 0;
-        --card-foreground: 0.145 0 0;
-        --popover: 1 0 0;
-        --popover-foreground: 0.145 0 0;
-        --primary: 0.45 0.15 230;
-        --primary-foreground: 0.985 0 0;
-        --secondary: 0.55 0.12 210;
-        --secondary-foreground: 0.985 0 0;
-        --muted: 0.96 0 0;
-        --muted-foreground: 0.50 0 0;
-        --accent: 0.60 0.14 220;
-        --accent-foreground: 0.985 0 0;
-        --destructive: 0.577 0.245 27.325;
-        --destructive-foreground: 0.985 0 0;
-        --border: 0.90 0 0;
-        --input: 0.90 0 0;
-        --ring: 0.45 0.15 230;
-        --chart-1: 0.646 0.222 41.116;
-        --chart-2: 0.6 0.118 184.704;
-        --chart-3: 0.398 0.07 227.392;
-        --chart-4: 0.828 0.189 84.429;
-        --chart-5: 0.769 0.188 70.08;
-        --sidebar: 0.985 0 0;
-        --sidebar-foreground: 0.145 0 0;
-        --sidebar-primary: 0.45 0.15 230;
-        --sidebar-primary-foreground: 0.985 0 0;
-        --sidebar-accent: 0.97 0 0;
-        --sidebar-accent-foreground: 0.145 0 0;
-        --sidebar-border: 0.90 0 0;
-        --sidebar-ring: 0.708 0 0;
-    }
+    --radius: 0.75rem;
+
+    /* Base */
+    --background: 0.97 0.02 230;
+    --foreground: 0.18 0.05 230;
+
+    /* Cards */
+    --card: 1 0 0;
+    --card-foreground: 0.18 0.05 230;
+
+    /* Primary – Aviation Blue */
+    --primary: 0.55 0.18 230;
+    --primary-foreground: 0.98 0 0;
+
+    /* Secondary */
+    --secondary: 0.65 0.12 220;
+    --secondary-foreground: 0.98 0 0;
+
+    /* Accent */
+    --accent: 0.72 0.10 215;
+    --accent-foreground: 0.18 0.05 230;
+
+    /* Muted */
+    --muted: 0.94 0.02 230;
+    --muted-foreground: 0.45 0.05 230;
+
+    --border: 0.9 0.02 230;
+    --input: 0.9 0.02 230;
+    --ring: 0.55 0.18 230;
+  }
 
     .dark {
         --background: 0.145 0 0;
@@ -90,9 +86,51 @@ body {
 }
 
 @layer utilities {
-    .bg-gradient-header {
-        background: linear-gradient(135deg, #0b1d33 0%, #4f83b8 100%);
+    .bg-gradient-hero {
+        background: linear-gradient(
+        135deg,
+        #0b1d33 0%,
+        #1f3f66 50%,
+        #4f83b8 100%
+        );
     }
+    .nav-glow {
+    position: relative;
+    z-index: 10;
+  }
+
+  .nav-glow::after {
+    content: "";
+    position: absolute;
+    inset: -8px;
+    border-radius: 9999px;
+    pointer-events: none;
+
+    background: radial-gradient(
+      circle,
+      rgba(160, 200, 255, 0.65) 0%,
+      rgba(120, 170, 255, 0.45) 40%,
+      transparent 70%
+    );
+
+    opacity: 0;
+    filter: blur(10px);
+    transition: opacity 0.25s ease;
+
+    /* 🔥 KUNCI UTAMA */
+    z-index: 20;
+  }
+
+  .nav-glow:hover::after {
+    opacity: 1;
+  }
+
+  .nav-glow:hover {
+    background-color: rgba(120, 170, 255, 0.8);
+    text-shadow:
+      0 0 6px rgba(180, 210, 255, 0.9),
+      0 0 14px rgba(120, 170, 255, 0.8);
+  }
 }
 
 /* Smooth scroll behavior */

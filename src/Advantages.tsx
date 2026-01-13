@@ -16,8 +16,8 @@ const Advantages = () => {
       icon: Zap,
       title: 'Pengiriman Cepat',
       description: 'Kami menjamin pengiriman yang cepat dan tepat waktu dengan berbagai pilihan layanan ekspres',
-      color: 'text-yellow-600',
-      bgColor: 'bg-yellow-100'
+      color: 'text-primary',
+      bgColor: 'bg-primary/10'
     },
     {
       icon: Eye,
@@ -71,7 +71,7 @@ const Advantages = () => {
   ];
 
   return (
-    <section id="keunggulan" className="py-20 bg-muted/30">
+    <section id="keunggulan" className="py-20 bg-muted">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12 animate-in fade-in slide-in-from-bottom duration-700">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Keunggulan Kami</h2>
@@ -105,15 +105,15 @@ const Advantages = () => {
             <CardContent className="pt-6">
               <div className="flex items-start gap-4">
                 <img 
-                  src="/assets/generated/transport-vehicle.dim_600x400.jpg" 
+                  src="/assets/generated/harga-bersahabat-2.png" 
                   alt="Transport Vehicle" 
                   className="w-full h-48 object-cover rounded-lg"
                 />
               </div>
               <div className="mt-4">
-                <h3 className="text-xl font-bold mb-2">Armada Modern</h3>
+                <h3 className="text-xl font-bold mb-2">Harga Bersahabat</h3>
                 <p className="text-muted-foreground">
-                  Kendaraan khusus dengan sistem ventilasi dan kontrol suhu untuk kenyamanan maksimal hewan peliharaan Anda
+                  Penawaran harga yang transparan dan kompetitif, disesuaikan dengan kebutuhan perjalanan tanpa mengurangi standar keselamatan dan kenyamanan hewan peliharaan Anda.
                 </p>
               </div>
             </CardContent>
