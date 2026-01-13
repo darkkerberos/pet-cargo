@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import logo from '@/assets/logo_pet_cargo.png'
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -76,7 +77,7 @@ const Header = () => {
           {/* LOGO */}
           <div className="flex items-center gap-3">
             <img
-              src="/assets/logo_pet_cargo.png"
+              src={logo}
               alt="Darin Pet's Transport"
               className="h-20 object-contain"
             />

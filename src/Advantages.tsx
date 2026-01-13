@@ -10,6 +10,9 @@ import {
   Headphones
 } from 'lucide-react';
 
+import hargaBersahabatImg from '@/assets/generated/harga-bersahabat-2.png'
+import happyCustomerImg from '@/assets/generated/happy-customer.dim_400x300.jpg'
+
 const Advantages = () => {
   const advantages = [
     {
@@ -105,7 +108,7 @@ const Advantages = () => {
             <CardContent className="pt-6">
               <div className="flex items-start gap-4">
                 <img 
-                  src="/assets/generated/harga-bersahabat-2.png" 
+                  src={hargaBersahabatImg} 
                   alt="Transport Vehicle" 
                   className="w-full h-48 object-cover rounded-lg"
                 />
@@ -123,7 +126,7 @@ const Advantages = () => {
             <CardContent className="pt-6">
               <div className="flex items-start gap-4">
                 <img 
-                  src="/assets/generated/happy-customer.dim_400x300.jpg" 
+                  src={happyCustomerImg} 
                   alt="Happy Customer" 
                   className="w-full h-48 object-cover rounded-lg"
                 />
