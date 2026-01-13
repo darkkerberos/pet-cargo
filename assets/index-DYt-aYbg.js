@@ -15452,34 +15452,79 @@ function CardContent({ className, ...props }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { "data-slot": "card-content", className: cn("px-6", className), ...props });
 }
 const About = () => {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("section", { id: "tentang", className: "py-20 bg-background", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "container mx-auto px-4", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-center mb-12 animate-in fade-in slide-in-from-bottom duration-700", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-3xl md:text-4xl font-bold mb-4", children: "Tentang Kami" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-lg text-muted-foreground max-w-2xl mx-auto", children: "DARIN PET'S TRANSPORT adalah perusahaan transportasi hewan peliharaan yang berpengalaman dan terpercaya" })
-    ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid md:grid-cols-3 gap-8 mb-12", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(Card, { className: "border-2 hover:shadow-lg transition-shadow duration-300 animate-in fade-in slide-in-from-bottom", style: { animationDuration: "700ms", animationDelay: "100ms" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(CardContent, { className: "pt-6", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col items-center text-center space-y-4", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "h-16 w-16 rounded-full bg-primary/10 flex items-center justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Calendar, { className: "h-8 w-8 text-primary" }) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "text-xl font-bold", children: "Berdiri Sejak" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-4xl font-bold text-primary", children: "2016" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-muted-foreground", children: "Lebih dari 8 tahun pengalaman dalam transportasi hewan peliharaan" })
-      ] }) }) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(Card, { className: "border-2 hover:shadow-lg transition-shadow duration-300 animate-in fade-in slide-in-from-bottom", style: { animationDuration: "700ms", animationDelay: "200ms" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(CardContent, { className: "pt-6", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col items-center text-center space-y-4", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "h-16 w-16 rounded-full bg-accent/10 flex items-center justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Eye, { className: "h-8 w-8 text-accent-foreground" }) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "text-xl font-bold", children: "Visi Kami" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-muted-foreground", children: "Menjadi perusahaan transportasi hewan peliharaan terdepan di Indonesia yang memberikan layanan berkualitas tinggi dengan standar internasional" })
-      ] }) }) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(Card, { className: "border-2 hover:shadow-lg transition-shadow duration-300 animate-in fade-in slide-in-from-bottom", style: { animationDuration: "700ms", animationDelay: "300ms" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(CardContent, { className: "pt-6", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col items-center text-center space-y-4", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "h-16 w-16 rounded-full bg-secondary/10 flex items-center justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Target, { className: "h-8 w-8 text-secondary-foreground" }) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "text-xl font-bold", children: "Misi Kami" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-muted-foreground", children: "Memberikan layanan transportasi hewan yang aman, nyaman, dan terpercaya dengan mengutamakan kesejahteraan hewan dan kepuasan pelanggan" })
-      ] }) }) })
-    ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "bg-gradient-to-r from-primary/5 to-accent/5 rounded-2xl p-8 md:p-12 animate-in fade-in slide-in-from-bottom", style: { animationDuration: "700ms", animationDelay: "400ms" }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "max-w-4xl mx-auto text-center space-y-4", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "text-2xl md:text-3xl font-bold", children: "Komitmen Kami" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-lg text-muted-foreground leading-relaxed", children: "Kami memahami bahwa hewan peliharaan adalah bagian dari keluarga Anda. Oleh karena itu, kami berkomitmen untuk memberikan perawatan terbaik selama perjalanan, memastikan setiap hewan sampai di tujuan dengan selamat dan dalam kondisi prima. Tim profesional kami siap melayani Anda 24 jam setiap hari." })
-    ] }) })
-  ] }) });
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { id: "tentang", className: "relative py-24 overflow-hidden", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-accent/5 -z-10" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "container mx-auto px-4", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid lg:grid-cols-2 gap-12 items-center mb-20", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative animate-in fade-in slide-in-from-left duration-700", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative rounded-3xl overflow-hidden shadow-2xl aspect-[4/3]", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "img",
+              {
+                src: "assets/generated/about-team.png",
+                alt: "Tim Darin Pets Transport",
+                className: "w-full h-full object-cover"
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "absolute -bottom-6 -right-6 bg-primary text-white p-6 rounded-2xl shadow-xl hidden md:block", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-4xl font-bold", children: "8+" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm font-medium", children: "Tahun Pengalaman" })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-6 animate-in fade-in slide-in-from-right duration-700 delay-300", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "inline-block px-4 py-1.5 bg-primary/10 text-primary rounded-full text-sm font-semibold tracking-wide uppercase", children: "Tentang Kami" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("h2", { className: "text-4xl md:text-5xl font-bold leading-tight", children: [
+            "Dedikasi Penuh untuk ",
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-primary", children: "Kesejahteraan" }),
+            " Hewan Anda"
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-lg text-muted-foreground leading-relaxed", children: "DARIN PET'S TRANSPORT bukan sekadar jasa pengiriman. Kami adalah partner terpercaya yang memahami bahwa hewan peliharaan adalah bagian tak terpisahkan dari keluarga Anda. Sejak 2016, kami telah mengukir senyum di wajah ribuan pemilik hewan melalui layanan yang aman dan penuh kasih sayang." }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-4 p-4 bg-white/50 backdrop-blur-sm border rounded-xl shadow-sm", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center shrink-0", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Heart, { className: "h-6 w-6 text-primary fill-primary/20" }) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "font-medium text-foreground/80", children: "Melayani dengan sepenuh hati selama 24 jam setiap hari." })
+          ] })
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid md:grid-cols-3 gap-8", children: [
+        {
+          icon: Calendar,
+          title: "Berdiri Sejak",
+          desc: "2016",
+          sub: "Pelopor transportasi hewan terpercaya.",
+          color: "bg-primary"
+        },
+        {
+          icon: Eye,
+          title: "Visi Kami",
+          desc: "Standar Internasional",
+          sub: "Menjadi leader transportasi hewan di Indonesia.",
+          color: "bg-accent"
+        },
+        {
+          icon: Target,
+          title: "Misi Kami",
+          desc: "Aman & Nyaman",
+          sub: "Mengutamakan kesejahteraan hewan di atas segalanya.",
+          color: "bg-secondary"
+        }
+      ].map((item, idx) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+        Card,
+        {
+          className: "border-none bg-white/50 backdrop-blur-sm hover:shadow-xl transition-all duration-300 animate-in fade-in slide-in-from-bottom",
+          style: { animationDelay: `${(idx + 1) * 150}ms` },
+          children: /* @__PURE__ */ jsxRuntimeExports.jsxs(CardContent, { className: "pt-8 pb-8 flex flex-col items-center text-center", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: `h-14 w-14 rounded-2xl ${item.color}/10 flex items-center justify-center mb-6`, children: /* @__PURE__ */ jsxRuntimeExports.jsx(item.icon, { className: `h-7 w-7 ${item.color === "bg-primary" ? "text-primary" : "text-foreground"}` }) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-2", children: item.title }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-2xl font-bold mb-3", children: item.desc }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-muted-foreground text-sm", children: item.sub })
+          ] })
+        },
+        idx
+      )) })
+    ] })
+  ] });
 };
 const badgeVariants = cva(
   "inline-flex items-center justify-center rounded-md border px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-[color,box-shadow] overflow-hidden",
@@ -15508,12 +15553,12 @@ function Badge({
 }
 const Services = () => {
   const serviceTypes = [
-    {
-      icon: Truck,
-      title: "Ekspedisi",
-      description: "Layanan pengiriman hewan peliharaan via darat dengan armada khusus yang nyaman dan aman",
-      color: "text-blue-600"
-    },
+    // {
+    //   icon: Truck,
+    //   title: 'Ekspedisi',
+    //   description: 'Layanan pengiriman hewan peliharaan via darat dengan armada khusus yang nyaman dan aman',
+    //   color: 'text-blue-600'
+    // },
     {
       icon: Plane,
       title: "Cargo Domestik",
@@ -15561,7 +15606,7 @@ const Services = () => {
       /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-3xl md:text-4xl font-bold mb-4", children: "Layanan Kami" }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-lg text-muted-foreground max-w-2xl mx-auto", children: "Berbagai pilihan layanan transportasi hewan peliharaan untuk memenuhi kebutuhan Anda" })
     ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16", children: serviceTypes.map((service, index2) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid md:grid-cols-3 lg:grid-cols-3 gap-6 mb-16", children: serviceTypes.map((service, index2) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
       Card,
       {
         className: "hover:shadow-xl transition-all duration-300 hover:-translate-y-1 animate-in fade-in slide-in-from-bottom",
@@ -15601,123 +15646,63 @@ const Procedure = () => {
   const steps = [
     {
       icon: Phone,
-      title: "Konsultasi & Cek Kelayakan",
-      summary: "Analisa kebutuhan, rute, dan kelayakan pengiriman",
-      color: "bg-blue-500",
-      details: [
-        "Data hewan: jenis, ras, ukuran/berat, usia",
-        "Rute asal–tujuan & tanggal kirim",
-        "Metode: cargo / door-to-door",
-        "Cek aturan maskapai/negara",
-        "Output: rekomendasi rute, dokumen & estimasi biaya"
-      ]
+      title: "Konsultasi Awal",
+      description: "Hubungi kami untuk konsultasi gratis mengenai kebutuhan transportasi hewan Anda",
+      color: "bg-blue-500"
     },
     {
       icon: FileText,
-      title: "Penawaran Harga & Konfirmasi",
-      summary: "Quotation & pemilihan paket layanan",
-      color: "bg-green-500",
-      details: [
-        "Rincian biaya: handling, kandang, dokumen, karantina",
-        "Pilihan paket: Basic / Plus / Premium",
-        "Pengisian form order",
-        "Pembayaran DP / Full sesuai kesepakatan"
-      ]
-    },
-    {
-      icon: Stethoscope,
-      title: "Persiapan Dokumen & Kesehatan",
-      summary: "Checklist dokumen domestik & internasional",
-      color: "bg-pink-500",
-      details: [
-        "Domestik: Buku vaksin & usia > 4 bulan",
-        "Internasional: Microchip (jika wajib)",
-        "Vaksin rabies & sesuai negara tujuan",
-        "Health certificate & legalisasi",
-        "Uji Titer Lab Pemerintah",
-        "Foto hewan"
-      ]
-    },
-    {
-      icon: Package,
-      title: "Persiapan Kandang & Keamanan",
-      summary: "Kandang sesuai standar & briefing anti-stres",
-      color: "bg-orange-500",
-      details: [
-        "Ukuran kandang sesuai standar",
-        "Ventilasi, pengunci & wadah minum",
-        "Label Live Animal + kontak pemilik",
-        "Briefing jadwal makan & tips perjalanan"
-      ]
-    },
-    {
-      icon: Truck,
-      title: "Penjemputan / Drop-off",
-      summary: "Pickup atau drop ke titik layanan",
-      color: "bg-cyan-500",
-      details: [
-        "Pickup ke rumah atau drop-off mandiri",
-        "Cek kondisi hewan",
-        "Foto/video sebelum berangkat",
-        "Final packing & administrasi"
-      ]
-    },
-    {
-      icon: MapPin,
-      title: "Check-in Cargo / Karantina",
-      summary: "Proses administrasi & verifikasi",
-      color: "bg-indigo-500",
-      details: [
-        "Check-in terminal cargo / pelabuhan",
-        "Verifikasi dokumen",
-        "Timbang & ukur kandang",
-        "Karantina (jika diwajibkan)"
-      ]
+      title: "Persiapan Dokumen",
+      description: "Kami bantu persiapan dokumen yang diperlukan seperti surat kesehatan dan vaksinasi",
+      color: "bg-green-500"
     },
     {
       icon: Calendar,
-      title: "Pengiriman & Transit",
-      summary: "Monitoring selama perjalanan",
-      color: "bg-purple-500",
-      details: [
-        "Hewan berangkat sesuai jadwal",
-        "Monitoring saat transit",
-        "Update status: check-in, departed, arrived"
-      ]
+      title: "Jadwal Pengiriman",
+      description: "Tentukan jadwal pengiriman yang sesuai dengan kebutuhan Anda",
+      color: "bg-purple-500"
+    },
+    {
+      icon: Stethoscope,
+      title: "Pemeriksaan Kesehatan",
+      description: "Pemeriksaan kondisi hewan sebelum perjalanan untuk memastikan kesiapan",
+      color: "bg-pink-500"
+    },
+    {
+      icon: Package,
+      title: "Persiapan Kandang",
+      description: "Penyediaan kandang transportasi yang aman dan nyaman sesuai standar",
+      color: "bg-orange-500"
+    },
+    {
+      icon: Truck,
+      title: "Penjemputan",
+      description: "Tim kami akan menjemput hewan peliharaan Anda di lokasi yang ditentukan",
+      color: "bg-cyan-500"
+    },
+    {
+      icon: MapPin,
+      title: "Proses Pengiriman",
+      description: "Pengiriman dilakukan dengan penanganan khusus dan monitoring berkala",
+      color: "bg-indigo-500"
     },
     {
       icon: MessageSquare,
-      title: "Kedatangan & Pengambilan",
-      summary: "Release & delivery tujuan",
-      color: "bg-teal-500",
-      details: [
-        "Release cargo / karantina",
-        "Self pick-up atau delivery rumah",
-        "Koordinasi waktu pengambilan"
-      ]
+      title: "Update Perjalanan",
+      description: "Anda akan mendapat update berkala mengenai status perjalanan hewan Anda",
+      color: "bg-teal-500"
     },
     {
       icon: CircleCheckBig,
-      title: "Serah Terima & Konfirmasi",
-      summary: "Pengecekan & dokumentasi",
-      color: "bg-emerald-500",
-      details: [
-        "Serah terima hewan",
-        "Cek kondisi",
-        "Foto/video dokumentasi",
-        "Konfirmasi selesai"
-      ]
+      title: "Tiba di Tujuan",
+      description: "Hewan peliharaan Anda tiba dengan selamat di lokasi tujuan",
+      color: "bg-emerald-500"
     },
     {
       icon: Star,
-      title: "Layanan Purna Kirim",
-      summary: "After service & garansi",
-      color: "bg-amber-500",
-      details: [
-        "Garansi layanan sesuai paket",
-        "Bantuan komplain jadwal/dokumen",
-        "Reminder perawatan pasca perjalanan"
-      ]
+      title: "Konfirmasi & Feedback",
+      description: "Konfirmasi penerimaan dan kami tunggu feedback Anda untuk peningkatan layanan",
+      color: "bg-amber-500"
     }
   ];
   return /* @__PURE__ */ jsxRuntimeExports.jsx("section", { id: "prosedur", className: "py-20 bg-background", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "container mx-auto px-4", children: [
@@ -15725,7 +15710,7 @@ const Procedure = () => {
       /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-3xl md:text-4xl font-bold mb-4", children: "Prosedur Pengiriman" }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-lg text-muted-foreground max-w-2xl mx-auto", children: "10 langkah mudah untuk memastikan hewan kesayangan Anda sampai dengan aman" })
     ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6", children: steps.map((step, index2) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid md:grid-cols-2 lg:grid-cols-5 gap-6 max-w-7xl mx-auto", children: steps.map((step, index2) => /* @__PURE__ */ jsxRuntimeExports.jsx(
       Card,
       {
         className: "relative hover:shadow-xl transition-all duration-300 hover:-translate-y-1 animate-in fade-in slide-in-from-bottom",
@@ -15736,8 +15721,7 @@ const Procedure = () => {
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "absolute -top-2 -right-2 h-8 w-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-bold shadow", children: index2 + 1 })
           ] }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "text-lg font-bold", children: step.title }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-muted-foreground", children: step.summary }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { className: "text-sm text-left text-muted-foreground space-y-1 mt-2 list-disc list-inside", children: step.details.map((item, i) => /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: item }, i)) })
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-muted-foreground", children: step.description })
         ] }) })
       },
       index2
