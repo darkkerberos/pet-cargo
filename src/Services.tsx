@@ -4,12 +4,12 @@ import { Truck, Plane, Globe, FileCheck, Dog, Cat, Bird, Bug } from 'lucide-reac
 
 const Services = () => {
   const serviceTypes = [
-    {
-      icon: Truck,
-      title: 'Ekspedisi',
-      description: 'Layanan pengiriman hewan peliharaan via darat dengan armada khusus yang nyaman dan aman',
-      color: 'text-blue-600'
-    },
+    // {
+    //   icon: Truck,
+    //   title: 'Ekspedisi',
+    //   description: 'Layanan pengiriman hewan peliharaan via darat dengan armada khusus yang nyaman dan aman',
+    //   color: 'text-blue-600'
+    // },
     {
       icon: Plane,
       title: 'Cargo Domestik',
@@ -54,7 +54,7 @@ const Services = () => {
         </div>
 
         {/* Service Types */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+        <div className="grid md:grid-cols-3 lg:grid-cols-3 gap-6 mb-16">
           {serviceTypes.map((service, index) => (
             <Card 
               key={service.title}

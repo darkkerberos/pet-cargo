@@ -1,6 +1,5 @@
 import { Button } from '@/components/ui/button';
 import { Phone } from 'lucide-react';
-import heroImage from '@/assets/generated/hero-pets.dim_800x600.jpg'
 
 const Hero = () => {
   const scrollToContact = () => {
@@ -58,7 +57,7 @@ const Hero = () => {
           <div className="relative animate-in fade-in slide-in-from-right duration-700 delay-300">
             <div className="relative rounded-2xl overflow-hidden shadow-2xl">
               <img 
-                src={heroImage} 
+                src="assets/generated/hero-pets.dim_800x600.jpg" 
                 alt="Happy pets ready for transport" 
                 className="w-full h-auto object-cover"
               />

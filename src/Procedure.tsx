@@ -14,127 +14,67 @@ import {
 
 const Procedure = () => {
   const steps = [
-  {
-    icon: Phone,
-    title: 'Konsultasi & Cek Kelayakan',
-    summary: 'Analisa kebutuhan, rute, dan kelayakan pengiriman',
-    color: 'bg-blue-500',
-    details: [
-      'Data hewan: jenis, ras, ukuran/berat, usia',
-      'Rute asal–tujuan & tanggal kirim',
-      'Metode: cargo / door-to-door',
-      'Cek aturan maskapai/negara',
-      'Output: rekomendasi rute, dokumen & estimasi biaya'
-    ]
-  },
-  {
-    icon: FileText,
-    title: 'Penawaran Harga & Konfirmasi',
-    summary: 'Quotation & pemilihan paket layanan',
-    color: 'bg-green-500',
-    details: [
-      'Rincian biaya: handling, kandang, dokumen, karantina',
-      'Pilihan paket: Basic / Plus / Premium',
-      'Pengisian form order',
-      'Pembayaran DP / Full sesuai kesepakatan'
-    ]
-  },
-  {
-    icon: Stethoscope,
-    title: 'Persiapan Dokumen & Kesehatan',
-    summary: 'Checklist dokumen domestik & internasional',
-    color: 'bg-pink-500',
-    details: [
-      'Domestik: Buku vaksin & usia > 4 bulan',
-      'Internasional: Microchip (jika wajib)',
-      'Vaksin rabies & sesuai negara tujuan',
-      'Health certificate & legalisasi',
-      'Uji Titer Lab Pemerintah',
-      'Foto hewan'
-    ]
-  },
-  {
-    icon: Package,
-    title: 'Persiapan Kandang & Keamanan',
-    summary: 'Kandang sesuai standar & briefing anti-stres',
-    color: 'bg-orange-500',
-    details: [
-      'Ukuran kandang sesuai standar',
-      'Ventilasi, pengunci & wadah minum',
-      'Label Live Animal + kontak pemilik',
-      'Briefing jadwal makan & tips perjalanan'
-    ]
-  },
-  {
-    icon: Truck,
-    title: 'Penjemputan / Drop-off',
-    summary: 'Pickup atau drop ke titik layanan',
-    color: 'bg-cyan-500',
-    details: [
-      'Pickup ke rumah atau drop-off mandiri',
-      'Cek kondisi hewan',
-      'Foto/video sebelum berangkat',
-      'Final packing & administrasi'
-    ]
-  },
-  {
-    icon: MapPin,
-    title: 'Check-in Cargo / Karantina',
-    summary: 'Proses administrasi & verifikasi',
-    color: 'bg-indigo-500',
-    details: [
-      'Check-in terminal cargo / pelabuhan',
-      'Verifikasi dokumen',
-      'Timbang & ukur kandang',
-      'Karantina (jika diwajibkan)'
-    ]
-  },
-  {
-    icon: Calendar,
-    title: 'Pengiriman & Transit',
-    summary: 'Monitoring selama perjalanan',
-    color: 'bg-purple-500',
-    details: [
-      'Hewan berangkat sesuai jadwal',
-      'Monitoring saat transit',
-      'Update status: check-in, departed, arrived'
-    ]
-  },
-  {
-    icon: MessageSquare,
-    title: 'Kedatangan & Pengambilan',
-    summary: 'Release & delivery tujuan',
-    color: 'bg-teal-500',
-    details: [
-      'Release cargo / karantina',
-      'Self pick-up atau delivery rumah',
-      'Koordinasi waktu pengambilan'
-    ]
-  },
-  {
-    icon: CheckCircle,
-    title: 'Serah Terima & Konfirmasi',
-    summary: 'Pengecekan & dokumentasi',
-    color: 'bg-emerald-500',
-    details: [
-      'Serah terima hewan',
-      'Cek kondisi',
-      'Foto/video dokumentasi',
-      'Konfirmasi selesai'
-    ]
-  },
-  {
-    icon: Star,
-    title: 'Layanan Purna Kirim',
-    summary: 'After service & garansi',
-    color: 'bg-amber-500',
-    details: [
-      'Garansi layanan sesuai paket',
-      'Bantuan komplain jadwal/dokumen',
-      'Reminder perawatan pasca perjalanan'
-    ]
-  }
-];
+    {
+      icon: Phone,
+      title: 'Konsultasi Awal',
+      description: 'Hubungi kami untuk konsultasi gratis mengenai kebutuhan transportasi hewan Anda',
+      color: 'bg-blue-500'
+    },
+    {
+      icon: FileText,
+      title: 'Persiapan Dokumen',
+      description: 'Kami bantu persiapan dokumen yang diperlukan seperti surat kesehatan dan vaksinasi',
+      color: 'bg-green-500'
+    },
+    {
+      icon: Calendar,
+      title: 'Jadwal Pengiriman',
+      description: 'Tentukan jadwal pengiriman yang sesuai dengan kebutuhan Anda',
+      color: 'bg-purple-500'
+    },
+    {
+      icon: Stethoscope,
+      title: 'Pemeriksaan Kesehatan',
+      description: 'Pemeriksaan kondisi hewan sebelum perjalanan untuk memastikan kesiapan',
+      color: 'bg-pink-500'
+    },
+    {
+      icon: Package,
+      title: 'Persiapan Kandang',
+      description: 'Penyediaan kandang transportasi yang aman dan nyaman sesuai standar',
+      color: 'bg-orange-500'
+    },
+    {
+      icon: Truck,
+      title: 'Penjemputan',
+      description: 'Tim kami akan menjemput hewan peliharaan Anda di lokasi yang ditentukan',
+      color: 'bg-cyan-500'
+    },
+    {
+      icon: MapPin,
+      title: 'Proses Pengiriman',
+      description: 'Pengiriman dilakukan dengan penanganan khusus dan monitoring berkala',
+      color: 'bg-indigo-500'
+    },
+    {
+      icon: MessageSquare,
+      title: 'Update Perjalanan',
+      description: 'Anda akan mendapat update berkala mengenai status perjalanan hewan Anda',
+      color: 'bg-teal-500'
+    },
+    {
+      icon: CheckCircle,
+      title: 'Tiba di Tujuan',
+      description: 'Hewan peliharaan Anda tiba dengan selamat di lokasi tujuan',
+      color: 'bg-emerald-500'
+    },
+    {
+      icon: Star,
+      title: 'Konfirmasi & Feedback',
+      description: 'Konfirmasi penerimaan dan kami tunggu feedback Anda untuk peningkatan layanan',
+      color: 'bg-amber-500'
+    }
+  ];
 
   return (
     <section id="prosedur" className="py-20 bg-background">
@@ -146,7 +86,7 @@ const Procedure = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-6 max-w-7xl mx-auto">
           {steps.map((step, index) => (
             <Card 
               key={index}
@@ -164,15 +104,7 @@ const Procedure = () => {
                     </div>
                   </div>
                   <h3 className="text-lg font-bold">{step.title}</h3>
-                  <p className="text-sm text-muted-foreground">
-                    {step.summary}
-                  </p>
-
-                  <ul className="text-sm text-left text-muted-foreground space-y-1 mt-2 list-disc list-inside">
-                    {step.details.map((item, i) => (
-                      <li key={i}>{item}</li>
-                    ))}
-                  </ul>
+                  <p className="text-sm text-muted-foreground">{step.description}</p>
                 </div>
               </CardContent>
             </Card>

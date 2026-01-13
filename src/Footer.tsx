@@ -1,6 +1,5 @@
 import { Heart } from 'lucide-react';
 import { SiWhatsapp } from 'react-icons/si';
-import companyLogo from '@/assets/generated/company-logo-transparent.dim_200x200.png'
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -12,7 +11,7 @@ const Footer = () => {
           <div>
             <div className="flex items-center gap-2 mb-4">
               <img 
-                src={companyLogo} 
+                src="assets/generated/company-logo-transparent.dim_200x200.png" 
                 alt="DARIN PET'S TRANSPORT Logo" 
                 className="h-10 w-10 object-contain"
               />
