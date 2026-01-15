@@ -6,6 +6,7 @@ import Services from './Services';
 import Procedure from './Procedure';
 import Advantages from './Advantages';
 import Contact from './Contact';
+import Testimonials from './Testimonials';
 import Footer from './Footer';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Services />
         <Procedure />
         <Advantages />
+        <Testimonials />
         <Contact />
       </main>
       <Footer />
