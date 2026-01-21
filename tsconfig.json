@@ -11,7 +11,7 @@
     "noImplicitAny": false,
     "forceConsistentCasingInFileNames": true,
     "module": "ESNext",
-    "moduleResolution": "bundler",
+    "moduleResolution": "Bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
@@ -20,7 +20,7 @@
     "paths": {
       "declarations/*": ["../declarations/*"],
       "@/*": ["./src/*"]
-    }
+    }    
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist", "build", "*.config.js", "eslint-rules/**/*"]

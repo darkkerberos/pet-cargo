@@ -1,131 +1,167 @@
-/* @import "tailwindcss";
+@import "tailwindcss";
 
-html,
-body {
-  background-color: #0f172a;
-} */
+@plugin "@tailwindcss/typography";
+@plugin "tailwindcss-animate";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@theme {
+  --radius: 0.75rem;
 
-@layer base {
-    :root {
-    --radius: 0.75rem;
+  /* Di v4, kita definisikan variabel tanpa fungsi oklch() agar 
+     Tailwind bisa memproses opacity secara dinamis (misal: bg-primary/50)
+  */
+  --color-background: oklch(var(--background));
+  --color-foreground: oklch(var(--foreground));
+  
+  --color-primary: oklch(var(--primary));
+  --color-primary-foreground: oklch(var(--primary-foreground));
+  
+  --color-secondary: oklch(var(--secondary));
+  --color-secondary-foreground: oklch(var(--secondary-foreground));
+  
+  --color-muted: oklch(var(--muted));
+  --color-muted-foreground: oklch(var(--muted-foreground));
+  
+  --color-accent: oklch(var(--accent));
+  --color-accent-foreground: oklch(var(--accent-foreground));
+  
+  --color-border: oklch(var(--border));
 
-    /* Base */
-    --background: 0.97 0.02 230;
-    --foreground: 0.18 0.05 230;
+  --primary: 0.55 0.18 230;
+  --primary-foreground: 0.98 0 0;
+  --secondary: 0.65 0.12 220;
+  --secondary-foreground: 0.98 0 0;
+  --muted: 0.94 0.02 230;
+  --muted-foreground: 0.45 0.05 230;
+  --background: 0.97 0.02 230;
+  --foreground: 0.18 0.05 230;
+  --border: 0.9 0.02 230;
 
-    /* Cards */
-    --card: 1 0 0;
-    --card-foreground: 0.18 0.05 230;
 
-    /* Primary – Aviation Blue */
-    --primary: 0.55 0.18 230;
-    --primary-foreground: 0.98 0 0;
+  --background: 0.97 0.02 230;
+  --foreground: 0.18 0.05 230;
 
-    /* Secondary */
-    --secondary: 0.65 0.12 220;
-    --secondary-foreground: 0.98 0 0;
+  --card: 1 0 0;
+  --card-foreground: 0.18 0.05 230;
 
-    /* Accent */
-    --accent: 0.72 0.10 215;
-    --accent-foreground: 0.18 0.05 230;
+  --primary: 0.55 0.18 230;
+  --primary-foreground: 0.98 0 0;
 
-    /* Muted */
-    --muted: 0.94 0.02 230;
-    --muted-foreground: 0.45 0.05 230;
+  --secondary: 0.65 0.12 220;
+  --secondary-foreground: 0.98 0 0;
 
-    --border: 0.9 0.02 230;
-    --input: 0.9 0.02 230;
-    --ring: 0.55 0.18 230;
-  }
+  --accent: 0.72 0.10 215;
+  --accent-foreground: 0.18 0.05 230;
 
-    .dark {
-        --background: 0.145 0 0;
-        --foreground: 0.985 0 0;
-        --card: 0.205 0 0;
-        --card-foreground: 0.985 0 0;
-        --popover: 0.269 0 0;
-        --popover-foreground: 0.985 0 0;
-        --primary: 0.65 0.18 230;
-        --primary-foreground: 0.145 0 0;
-        --secondary: 0.35 0.10 210;
-        --secondary-foreground: 0.985 0 0;
-        --muted: 0.269 0 0;
-        --muted-foreground: 0.708 0 0;
-        --accent: 0.45 0.12 220;
-        --accent-foreground: 0.985 0 0;
-        --destructive: 0.704 0.191 22.216;
-        --destructive-foreground: 0.205 0 0;
-        --border: 1 0 0 / 10%;
-        --input: 1 0 0 / 15%;
-        --ring: 0.65 0.18 230;
-        --chart-1: 0.488 0.243 264.376;
-        --chart-2: 0.696 0.17 162.48;
-        --chart-3: 0.769 0.188 70.08;
-        --chart-4: 0.627 0.265 303.9;
-        --chart-5: 0.645 0.246 16.439;
-        --sidebar: 0.205 0 0;
-        --sidebar-foreground: 0.985 0 0;
-        --sidebar-primary: 0.65 0.18 230;
-        --sidebar-primary-foreground: 0.985 0 0;
-        --sidebar-accent: 0.269 0 0;
-        --sidebar-accent-foreground: 0.985 0 0;
-        --sidebar-border: 1 0 0 / 10%;
-        --sidebar-ring: 0.439 0 0;
-    }
+  --color-muted: oklch(var(--muted));
+  --color-muted-foreground: oklch(var(--muted-foreground));
 
-    * {
-        @apply border-border;
-    }
-    body {
-        @apply bg-background text-foreground;
-    }
+  --muted: 0.94 0.02 230;
+  --muted-foreground: 0.45 0.05 230;
+
+  --border: 0.9 0.02 230;
+  --input: 0.9 0.02 230;
+  --ring: 0.55 0.18 230;
+  
+  /* Tambahan untuk dark mode v4 agar terikat ke class .dark */
+  --color-background: oklch(var(--background));
+  --color-foreground: oklch(var(--foreground));
+  --color-primary: oklch(var(--primary));
+  --color-border: oklch(var(--border));
+
+  --container-2xl: 1400px;
+  --breakpoint-2xl: 1400px;
 }
 
-@layer utilities {
-    .bg-gradient-hero {
-        background: linear-gradient(
-        135deg,
-        #0b1d33 0%,
-        #1f3f66 50%,
-        #4f83b8 100%
-        );
-    }
-    .nav-glow {
-    position: relative;
-    z-index: 10;
+/* Agar Dark Mode bekerja, kita timpa nilai variabel mentahnya.
+   V4 akan otomatis menggunakan nilai ini saat class .dark aktif.
+*/
+@layer base {
+  .dark {
+    --background: 0.145 0 0;
+    --foreground: 0.985 0 0;
+    --card: 0.205 0 0;
+    --card-foreground: 0.985 0 0;
+    --primary: 0.65 0.18 230;
+    --primary-foreground: 0.145 0 0;
+    --secondary: 0.35 0.10 210;
+    --secondary-foreground: 0.985 0 0;
+    --muted: 0.269 0 0;
+    --muted-foreground: 0.708 0 0;
+    --accent: 0.45 0.12 220;
+    --accent-foreground: 0.985 0 0;
+    --border: 1 0 0 / 10%;
+    --ring: 0.65 0.18 230;
   }
 
-  .nav-glow::after {
+  * {
+    border-color: oklch(var(--border));
+  }
+
+  body {
+    background-color: oklch(var(--background));
+    color: oklch(var(--foreground));
+  }
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 30px; /* Supaya scrollbar tidak mentok ke pojok rounded */
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #00365c40; /* Warna Navy dengan transparansi */
+    border-radius: 10px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #00365c80;
+  }
+
+  .edit-filepond .filepond--root {
+    height: 12rem; /* Sama dengan h-48 di Tailwind */
+    margin-bottom: 0;
+}
+
+.edit-filepond .filepond--panel-root {
+    background-color: #f8fafc; /* bg-slate-50 */
+    border-radius: 2rem;
+}
+}
+
+/* ================================
+   UTILITIES (Perbaikan nav-glow)
+================================ */
+@utility nav-glow {
+  position: relative;
+  z-index: 10;
+
+  /* JANGAN gunakan @utility nav-glow::after */
+  /* Gunakan nesting '&' di dalam blok induk */
+  &::after {
     content: "";
     position: absolute;
     inset: -8px;
     border-radius: 9999px;
     pointer-events: none;
-
     background: radial-gradient(
       circle,
       rgba(160, 200, 255, 0.65) 0%,
       rgba(120, 170, 255, 0.45) 40%,
       transparent 70%
     );
-
     opacity: 0;
     filter: blur(10px);
     transition: opacity 0.25s ease;
-
-    /* 🔥 KUNCI UTAMA */
-    z-index: 20;
+    z-index: -1;
   }
 
-  .nav-glow:hover::after {
+  &:hover::after {
     opacity: 1;
   }
 
-  .nav-glow:hover {
+  &:hover {
     background-color: rgba(120, 170, 255, 0.8);
     text-shadow:
       0 0 6px rgba(180, 210, 255, 0.9),
@@ -133,109 +169,15 @@ body {
   }
 }
 
-/* Smooth scroll behavior */
-html {
-    scroll-behavior: smooth;
+/* Utility lainnya tetap seperti sebelumnya */
+@utility bg-gradient-hero {
+  background: linear-gradient(135deg, #0b1d33 0%, #1f3f66 50%, #4f83b8 100%);
 }
 
-/* Animation utilities */
-@keyframes fade-in {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+@utility container {
+  margin-inline: auto;
+  padding-inline: 2rem; /* Sesuaikan padding samping jika perlu */
+  width: 100%;
+  max-width: 1400px;
 }
 
-@keyframes slide-in-from-bottom {
-    from {
-        transform: translateY(30px);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
-@keyframes slide-in-from-left {
-    from {
-        transform: translateX(-30px);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
-
-@keyframes slide-in-from-right {
-    from {
-        transform: translateX(30px);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
-
-@keyframes slide-in-from-top {
-    from {
-        transform: translateY(-10px);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
-.animate-in {
-    animation-fill-mode: both;
-}
-
-.fade-in {
-    animation-name: fade-in;
-}
-
-.slide-in-from-bottom {
-    animation-name: slide-in-from-bottom;
-}
-
-.slide-in-from-left {
-    animation-name: slide-in-from-left;
-}
-
-.slide-in-from-right {
-    animation-name: slide-in-from-right;
-}
-
-.slide-in-from-top {
-    animation-name: slide-in-from-top;
-}
-
-.duration-700 {
-    animation-duration: 700ms;
-}
-
-.delay-100 {
-    animation-delay: 100ms;
-}
-
-.delay-200 {
-    animation-delay: 200ms;
-}
-
-.delay-300 {
-    animation-delay: 300ms;
-}
-
-.delay-400 {
-    animation-delay: 400ms;
-}
-
-.delay-500 {
-    animation-delay: 500ms;
-}
