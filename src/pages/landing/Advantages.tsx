@@ -156,7 +156,7 @@ const Advantages = () => {
         <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
           <div className="relative group overflow-hidden rounded-[2.5rem] bg-slate-900 aspect-[16/10] lg:aspect-auto">
             <img 
-              src="assets/generated/harga-bersahabat-2.png" 
+              src={`${import.meta.env.BASE_URL}assets/generated/harga-bersahabat-2.png`}
               alt="Harga" 
               className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-110 transition-transform duration-700"
             />
@@ -173,7 +173,7 @@ const Advantages = () => {
 
           <div className="relative group overflow-hidden rounded-[2.5rem] bg-[#00365c] aspect-[16/10] lg:aspect-auto">
             <img 
-              src="assets/generated/happy-customer.dim_400x300.jpg" 
+              src={`${import.meta.env.BASE_URL}assets/generated/happy-customer.dim_400x300.jpg`}
               alt="Kepuasan" 
               className="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:scale-110 transition-transform duration-700"
             />

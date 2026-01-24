@@ -74,7 +74,7 @@ const Hero = () => {
           <div className="relative animate-in fade-in slide-in-from-right duration-700 delay-300">
             <div className="relative rounded-2xl overflow-hidden shadow-2xl">
               <img 
-                src="assets/generated/hero-pets.dim_800x600.jpg" 
+                src={`${import.meta.env.BASE_URL}assets/generated/hero-pets.dim_800x600.jpg`}
                 alt="Happy pets ready for transport" 
                 className="w-full h-auto object-cover"
               />

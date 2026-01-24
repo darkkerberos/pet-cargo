@@ -1,0 +1,91 @@
+.filepond--root {
+  width: 100%;
+  min-height: 360px;
+  font-family: inherit;
+}
+
+.filepond--panel-root {
+  background: #2b303b;
+  border-radius: 1.5rem;
+}
+
+.filepond--drop-label {
+  color: #cbd5f5;
+}
+
+.filepond--drop-label label {
+  cursor: pointer;
+}
+
+/* dashed border */
+.filepond--panel-root::before {
+  content: '';
+  position: absolute;
+  inset: 16px;
+  border-radius: 1.25rem;
+}
+
+.filepond--root {
+  position: relative;
+  z-index: 50;
+}
+
+.filepond--panel-root {
+  position: relative;
+  /* z-index: 50; */
+}
+
+[data-radix-dialog-content] {
+  overflow: visible !important;
+  max-height: unset !important;
+}
+
+.filepond--root {
+  height: 420px;
+}
+
+/* Container Utama */
+.custom-filepond.filepond--root {
+    height: 100% !important;
+    min-height: 420px !important; /* Sesuaikan dengan tinggi di JSX */
+}
+
+/* Memaksa area preview kembali ke titik 0,0 (Tidak di bawah teks) */
+.custom-filepond .filepond--list-scroller {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    transform: translate3d(0, 0, 0) !important; /* Reset loncatan 380px */
+    height: 100% !important;
+    width: 100% !important;
+    margin-top: 0 !important;
+}
+
+/* Mengatur list agar memenuhi seluruh kotak */
+.custom-filepond .filepond--list {
+    position: absolute !important;
+    top: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    padding: 0 !important;
+}
+
+/* Memastikan item preview mengisi seluruh area */
+.custom-filepond .filepond--item {
+    margin: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* Membuat gambar preview benar-benar menutupi (cover) */
+.custom-filepond .filepond--image-preview-wrapper,
+.custom-filepond .filepond--image-preview {
+    height: 100% !important;
+    border-radius: 2rem !important;
+}
+
+/* Perbaiki posisi tombol silang (remove) agar terlihat */
+.custom-filepond .filepond--file-action-button {
+    cursor: pointer;
+    z-index: 100;
+}

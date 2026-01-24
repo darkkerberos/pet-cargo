@@ -6,8 +6,9 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Phone, Mail, MapPin, Clock, Send, MessageCircle } from 'lucide-react';
 import { SiWhatsapp } from 'react-icons/si';
+import {ContactItem, ProfileData, formatWhatsapp } from '@/types/profile'
 
-const Contact = () => {
+const Contact = ({ profile } : { profile: ProfileData | null}) => {
   const { t, i18n } = useTranslation();
   const [formData, setFormData] = useState({
     name: '',
@@ -16,66 +17,43 @@ const Contact = () => {
     message: ''
   });
 
+  
+
   useEffect(() => {
+    // i18n Resources (Tetap seperti aslimu)
     i18n.addResourceBundle('en', 'translation', {
       "Hubungi Kami": "Contact Us",
       "Siap Memberikan Perjalanan": "Ready to Provide the",
       "Terbaik": "Best",
       "Untuk Hewan Anda": "Journey for Your Pets",
-      "Konsultasikan kebutuhan relokasi hewan peliharaan Anda secara gratis. Tim kami siaga 24 jam untuk membantu Anda.": "Consult your pet relocation needs for free. Our team is on standby 24/7 to help you.",
       "Telepon Kantor": "Office Phone",
       "Lokasi Kantor": "Office Location",
       "Formulir Relokasi": "Relocation Form",
-      "Lengkapi data berikut untuk mendapatkan estimasi biaya langsung via WhatsApp.": "Complete the following data to get a cost estimate directly via WhatsApp.",
       "Nama Lengkap": "Full Name",
       "Masukkan nama Anda": "Enter your name",
       "Alamat email aktif": "Active email address",
       "Jenis Hewan (Kucing/Anjing/Lainnya)": "Pet Type (Cat/Dog/Others)",
-      "Contoh: 2 Kucing Persi": "Example: 2 Persian Cats",
-      "Detail Kebutuhan / Alamat Jemput & Tujuan": "Requirement Details / Pickup & Destination Address",
-      "Ceritakan detail rencana pengiriman hewan Anda...": "Tell us the details of your pet shipment plan...",
+      "Detail Kebutuhan / Alamat Jemput & Tujuan": "Requirement Details",
       "Konsultasi via WhatsApp": "Consult via WhatsApp",
-      "*Dengan menekan tombol, Anda akan diarahkan langsung ke chat WhatsApp resmi kami.": "*By clicking the button, you will be directed directly to our official WhatsApp chat.",
-      "WA_MESSAGE": "Hello Darin Pet's Transport,\n\nI would like to ask about pet relocation:\n\n*Name:* {{name}}\n*Email:* {{email}}\n*Pet Type:* {{petType}}\n*Message:* {{message}}"
     }, true, true);
   }, [i18n]);
 
+  // --- LOGIKA FILTERING ---
+  // Kita filter array contacts berdasarkan type
+  const waContacts = profile?.contacts.filter(c => c.type === 'whatsapp') || [];
+  const phoneContacts = profile?.contacts.filter(c => c.type === 'telephone') || [];
+  const emailContacts = profile?.contacts.filter(c => c.type === 'email') || [];
+
   const handleSendWhatsApp = () => {
-    // Pesan WhatsApp otomatis menyesuaikan bahasa yang dipilih
-    const baseMessage = i18n.language === 'id' 
-      ? `Halo Darin Pet's Transport,\n\nSaya ingin bertanya tentang relokasi hewan:\n\n*Nama:* ${formData.name}\n*Email:* ${formData.email}\n*Jenis Hewan:* ${formData.petType}\n*Pesan:* ${formData.message}`
-      : `Hello Darin Pet's Transport,\n\nI want to ask about pet relocation:\n\n*Name:* ${formData.name}\n*Email:* ${formData.email}\n*Pet Type:* ${formData.petType}\n*Message:* ${formData.message}`;
+    const baseMessage = `Halo Darin Pet's Transport,\n\nSaya ingin bertanya tentang relokasi hewan:\n\n*Nama:* ${formData.name}\n*Email:* ${formData.email}\n*Jenis Hewan:* ${formData.petType}\n*Pesan:* ${formData.message}`;
     
-    const url = `https://wa.me/6281280826143?text=${encodeURIComponent(baseMessage)}`;
+    // Ambil nomor WA pertama dari list, kalau tidak ada pakai fallback dari field whatsapp utama
+    const targetWa = waContacts.length > 0 ? waContacts[0].value : profile?.whatsapp;
+    const cleanNumber = formatWhatsapp(targetWa?.replace(/\D/g, ''));
+
+    const url = `https://wa.me/${cleanNumber}?text=${encodeURIComponent(baseMessage)}`;
     window.open(url, '_blank');
   };
-
-  const contactDetails = [
-    {
-      icon: <SiWhatsapp className="w-5 h-5" />,
-      title: "WhatsApp",
-      value: "0812-8082-6143",
-      link: "https://wa.me/6281280826143",
-      color: "text-green-600",
-      bg: "bg-green-50"
-    },
-    {
-      icon: <Phone className="w-5 h-5" />,
-      title: t("Telepon Kantor"),
-      value: "(021) 55722971",
-      link: "tel:+622155722971",
-      color: "text-blue-600",
-      bg: "bg-blue-50"
-    },
-    {
-      icon: <Mail className="w-5 h-5" />,
-      title: "Email Support",
-      value: "Dpu.ekspres@gmail.com",
-      link: "mailto:Dpu.ekspres@gmail.com",
-      color: "text-red-600",
-      bg: "bg-red-50"
-    }
-  ];
 
   return (
     <section id="kontak" className="py-24 bg-slate-50 relative overflow-hidden">
@@ -94,22 +72,47 @@ const Contact = () => {
 
         <div className="grid lg:grid-cols-12 gap-12 items-start">
           
-          {/* SISI KIRI: Info Kontak & Map */}
+          {/* SISI KIRI: Info Kontak (Dinamis Berdasarkan Filter) */}
           <div className="lg:col-span-5 space-y-8">
             <div className="grid grid-cols-1 gap-4">
-              {contactDetails.map((item, idx) => (
-                <a 
-                  key={idx} 
-                  href={item.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center p-4 bg-white rounded-2xl shadow-sm border border-slate-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300 group"
-                >
-                  <div className={`${item.bg} ${item.color} p-4 rounded-xl mr-5 group-hover:scale-110 transition-transform`}>
-                    {item.icon}
+              
+              {/* Render Semua WhatsApp */}
+              {waContacts.map((item, idx) => (
+                <a key={`wa-${idx}`} href={`https://wa.me/${formatWhatsapp(item.value.replace(/\D/g, ''))}`} target="_blank" rel="noopener noreferrer"
+                  className="flex items-center p-4 bg-white rounded-2xl shadow-sm border border-slate-100 hover:shadow-md hover:-translate-y-1 transition-all group">
+                  <div className="bg-green-50 text-green-600 p-4 rounded-xl mr-5 group-hover:scale-110 transition-transform">
+                    <SiWhatsapp className="w-5 h-5" />
                   </div>
                   <div>
-                    <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">{item.title}</p>
+                    <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">{item.label || "WhatsApp"}</p>
+                    <p className="text-slate-900 font-semibold">{item.value}</p>
+                  </div>
+                </a>
+              ))}
+
+              {/* Render Semua Telepon */}
+              {phoneContacts.map((item, idx) => (
+                <a key={`phone-${idx}`} href={`tel:${item.value}`}
+                  className="flex items-center p-4 bg-white rounded-2xl shadow-sm border border-slate-100 hover:shadow-md hover:-translate-y-1 transition-all group">
+                  <div className="bg-blue-50 text-blue-600 p-4 rounded-xl mr-5 group-hover:scale-110 transition-transform">
+                    <Phone className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">{item.label || t("Telepon Kantor")}</p>
+                    <p className="text-slate-900 font-semibold">{item.value}</p>
+                  </div>
+                </a>
+              ))}
+
+              {/* Render Semua Email */}
+              {emailContacts.map((item, idx) => (
+                <a key={`email-${idx}`} href={`mailto:${item.value}`}
+                  className="flex items-center p-4 bg-white rounded-2xl shadow-sm border border-slate-100 hover:shadow-md hover:-translate-y-1 transition-all group">
+                  <div className="bg-red-50 text-red-600 p-4 rounded-xl mr-5 group-hover:scale-110 transition-transform">
+                    <Mail className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">{item.label || "Email Support"}</p>
                     <p className="text-slate-900 font-semibold">{item.value}</p>
                   </div>
                 </a>
@@ -124,28 +127,22 @@ const Contact = () => {
                       <MapPin className="w-4 h-4" /> {t("Lokasi Kantor")}
                     </p>
                     <p className="font-medium text-sm leading-relaxed">
-                      Komplek Taman Adhiloka Blok A No. 9, Tangerang
+                      {profile?.address || "Komplek Taman Adhiloka, Tangerang"}
                     </p>
                   </div>
-                  <div className="bg-white/10 p-3 rounded-full">
-                    <Clock className="w-6 h-6 text-green-400" />
-                  </div>
+                  <Clock className="w-6 h-6 text-green-400" />
                 </div>
                 <div className="h-[250px] w-full bg-slate-200">
                   <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.671!2d106.634!3d-6.175!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwMTAnMzAuMCJTIDEwNiwzOCcwMi40IkU!5e0!3m2!1sen!2sid!4v1700000000000"
-                    width="100%"
-                    height="100%"
-                    style={{ border: 0 }}
-                    allowFullScreen
-                    loading="lazy"
+                    src={`https://maps.google.com/maps?q=${profile?.address_latlong}&z=15&output=embed`}
+                    width="100%" height="100%" style={{ border: 0 }} allowFullScreen loading="lazy"
                   ></iframe>
                 </div>
               </CardContent>
             </Card>
           </div>
 
-          {/* SISI KANAN: Form Pesan */}
+          {/* SISI KANAN: Form Pesan (Tetap Sesuai Desain Kamu) */}
           <div className="lg:col-span-7">
             <Card className="border-none shadow-2xl rounded-[2.5rem] overflow-hidden">
               <div className="bg-[#00365c] py-8 px-10 text-white">

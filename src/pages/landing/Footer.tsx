@@ -1,9 +1,12 @@
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Mail, Phone, MapPin, Clock, ChevronRight, Heart } from 'lucide-react';
+import { Mail, Phone, MapPin, Clock, ChevronRight, Heart, PawPrint } from 'lucide-react';
 import { SiWhatsapp, SiInstagram, SiFacebook } from 'react-icons/si';
+import {ContactItem, ProfileData, formatWhatsapp} from '@/types/profile'
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+// import { HashLink } from 'react-router-hash-link';
 
-const Footer = () => {
+const Footer = ({ profile } : { profile: ProfileData | null}) => {
   const { t, i18n } = useTranslation();
   const currentYear = new Date().getFullYear();
 
@@ -27,12 +30,27 @@ const Footer = () => {
     }, true, true);
   }, [i18n]);
 
+  const navigate = useNavigate();
+
+  const handleQuickLink = (targetId: string) => {
+    navigate('/', { state: { scrollTo: targetId } });
+    
+    // Jika user sudah di Home, navigate di atas tidak trigger re-render
+    // maka kita bantu scroll manual jika ID tersedia
+    const el = document.getElementById(targetId);
+    if (el) {
+      const offset = 80;
+      const y = el.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
+  };
+
   const quickLinks = [
-    { name: t('Beranda'), href: '#beranda' },
-    { name: t('Tentang Kami'), href: '#tentang' },
-    { name: t('Layanan'), href: '#layanan' },
-    { name: t('Prosedur'), href: '#prosedur' },
-    { name: t('Kontak'), href: '#kontak' },
+    { name: t('Beranda'), id: 'beranda' },
+    { name: t('Tentang Kami'), id: 'tentang' },
+    { name: t('Layanan'), id: 'layanan' },
+    { name: t('Prosedur'), id: 'prosedur' },
+    { name: t('Kontak'), id: 'kontak' },
   ];
 
   const services = [
@@ -42,6 +60,15 @@ const Footer = () => {
     t('Relokasi Hewan'),
     t('Pengurusan Dokumen'),
   ];
+
+  const waContacts = profile?.contacts.filter(c => c.type === 'whatsapp') || [];
+  const phoneContacts = profile?.contacts.filter(c => c.type === 'telephone') || [];
+  const emailContacts = profile?.contacts.filter(c => c.type === 'email') || [];
+  const facebooks = profile?.contacts.filter(c => c.type === 'facebook') || [];
+  const instagrams = profile?.contacts.filter(c => c.type === 'instagram') || [];
+  const tiktoks = profile?.contacts.filter(c => c.type === 'tiktok') || [];
+  const wa = profile?.contacts?.find(c => c.type === 'whatsapp') ?.value;
+  const waNumber = formatWhatsapp(wa);
 
   return (
     <footer className="relative text-white/80 pt-20 pb-10 overflow-hidden" style={{ backgroundColor: '#00365c' }}>
@@ -58,28 +85,35 @@ const Footer = () => {
             <div className="flex items-center gap-3">
               <div className="bg-white p-1.5 rounded-xl shadow-lg">
                 <img 
-                  src="assets/logo_pet_cargo.png" 
+                  src={`${import.meta.env.BASE_URL}${profile?.logo_url}`}
                   alt="Logo" 
                   className="h-10 w-10 object-contain"
                 />
               </div>
               <span className="text-xl font-bold text-white tracking-tight uppercase">
-                Darin Pet's Transport
+                { profile?.name}
+                {/* Darin Pet's Transport */}
               </span>
             </div>
             <p className="text-white/70 leading-relaxed text-sm">
               {t("Partner terpercaya untuk perjalanan aman hewan kesayangan Anda sejak 2016. Kami mengutamakan kenyamanan dan keselamatan di setiap kilometer.")}
             </p>
             <div className="flex gap-4">
-              <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white hover:text-[#00365c] transition-all duration-300">
+              {instagrams.map((item, idx) => (
+              <a key={`ig-${idx}`} href={`${item.value}`} className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white hover:text-[#00365c] transition-all duration-300">
                 <SiInstagram className="h-5 w-5" />
               </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white hover:text-[#00365c] transition-all duration-300">
+              ))}
+              {facebooks.map((item, idx) => (
+              <a key={`ig-${idx}`} href={`${item.value}`} className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white hover:text-[#00365c] transition-all duration-300">
                 <SiFacebook className="h-5 w-5" />
               </a>
-              <a href="https://wa.me/6281280826143" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-green-500 hover:text-white transition-all duration-300">
+              ))}
+              {waContacts.map((item, idx) => (
+              <a key={`ig-${idx}`} href={`https://wa.me/${formatWhatsapp(item.value)}`} className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-green-500 hover:text-white transition-all duration-300">
                 <SiWhatsapp className="h-5 w-5" />
               </a>
+              ))}
             </div>
           </div>
 
@@ -88,16 +122,18 @@ const Footer = () => {
             <h4 className="text-white font-bold text-lg mb-6 uppercase tracking-wider">{t("Navigasi")}</h4>
             <ul className="space-y-4">
               {quickLinks.map((link) => (
-                <li key={link.name}>
-                  <a 
-                    href={link.href} 
-                    className="flex items-center gap-2 hover:text-white transition-all group"
+                <li key={link.id}>
+                  <button 
+                    onClick={() => handleQuickLink(link.id)}
+                    className="text-slate-400 hover:text-white transition-colors text-sm"
                   >
-                    <ChevronRight className="h-4 w-4 text-white opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all" />
                     {link.name}
-                  </a>
+                  </button>
                 </li>
               ))}
+                <li>
+                  <Link to="/gallery" className="text-slate-400 hover:text-white transition-colors text-sm">Galeri</Link>
+                </li>
             </ul>
           </div>
 
@@ -105,8 +141,8 @@ const Footer = () => {
           <div>
             <h4 className="text-white font-bold text-lg mb-6 uppercase tracking-wider">{t("Layanan Kami")}</h4>
             <ul className="space-y-4">
-              {services.map((service) => (
-                <li key={service} className="flex items-center gap-2 hover:translate-x-1 transition-transform cursor-default">
+              {services.map((service, index) => (
+                <li key={index} className="flex items-center gap-2 hover:translate-x-1 transition-transform cursor-default">
                   <div className="h-1.5 w-1.5 rounded-full bg-white/40" />
                   {service}
                 </li>
@@ -122,19 +158,28 @@ const Footer = () => {
                 <div className="bg-white/10 p-2 rounded-lg group-hover:bg-white/20 transition-colors">
                   <MapPin className="h-4 w-4 text-white shrink-0" />
                 </div>
-                <span className="text-sm">Komplek Taman Adhiloka Blok A No. 9, Tangerang – Banten</span>
+                <span className="text-sm">{`${profile?.address}`}</span>
+              </li>
+              <li className="flex flex-col gap-3"> {/* Gunakan flex-col jika IG-nya ada banyak */}
+                {phoneContacts.map((item, idx) => (
+                  <div key={idx} className="flex items-center gap-3 group">
+                    <div className="bg-white/10 p-2 rounded-lg group-hover:bg-white/20 transition-colors">
+                      <Phone className="h-4 w-4 text-white shrink-0" />
+                    </div>
+                    <span className="text-sm">{item.value}</span>
+                  </div>
+                ))}
               </li>
               <li className="flex items-center gap-3 group">
-                <div className="bg-white/10 p-2 rounded-lg group-hover:bg-white/20 transition-colors">
-                  <Phone className="h-4 w-4 text-white shrink-0" />
-                </div>
-                <span className="text-sm">0812-8082-6143</span>
-              </li>
-              <li className="flex items-center gap-3 group">
-                <div className="bg-white/10 p-2 rounded-lg group-hover:bg-white/20 transition-colors">
-                  <Mail className="h-4 w-4 text-white shrink-0" />
-                </div>
-                <span className="text-sm">Dpu.ekspres@gmail.com</span>
+                {emailContacts.map((item, idx) => (
+                  <div key={idx} className="flex items-center gap-3 group">
+                    <div className="bg-white/10 p-2 rounded-lg group-hover:bg-white/20 transition-colors">
+                      <Mail className="h-4 w-4 text-white shrink-0" />
+                    </div>
+                    <span className="text-sm">{item.value}</span>
+                  </div>
+                ))}
+                
               </li>
               <li className="flex items-center gap-3 bg-white/5 p-3 rounded-xl border border-white/10">
                 <Clock className="h-4 w-4 text-green-400 shrink-0" />
@@ -151,7 +196,7 @@ const Footer = () => {
           </p>
           <div className="flex items-center gap-2 text-sm text-white/50">
             <span>{t("Made with")}</span>
-            <Heart className="h-3.5 w-3.5 text-red-400 fill-red-400" />
+            <PawPrint className="h-3.5 w-3.5 text-red-400 fill-red-400" />
             <span>{t("by")}</span>
             <span className="text-white/80 font-medium tracking-wide">dark.kerberos05</span>
           </div>
@@ -160,7 +205,7 @@ const Footer = () => {
 
       {/* Floating WA Button */}
       <a
-        href="https://wa.me/6281280826143"
+        href={`https://wa.me/${waNumber}`}
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-6 right-6 z-50 group"

@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Allow: /assets/
+Disallow: /#/admin
+Disallow: /#/login
+Disallow: /#/forgot-password
+Disallow: /#/reset-password
+
+Sitemap: https://darkkerberos.github.io/pet-cargo/sitemap.xml

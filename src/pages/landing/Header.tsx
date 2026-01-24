@@ -3,9 +3,10 @@ import { Menu, X, Phone, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate } from 'react-router-dom';
-import "@/index.css"
+import {ContactItem, ProfileData} from '@/types/profile'
+// import "@/index.css"
 
-const Header = () => {
+const Header = ({ profile } : { profile: ProfileData | null}) => {
   const { t, i18n } = useTranslation();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -118,7 +119,7 @@ const Header = () => {
               }`}
             >
               <img
-                src="assets/logo_pet_cargo.png"
+                src={`${import.meta.env.BASE_URL}${profile?.logo_url}`}
                 alt="Logo"
                 className="h-full w-full object-contain"
               />

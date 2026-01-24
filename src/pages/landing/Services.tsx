@@ -15,6 +15,8 @@ import {
   Plane, Globe, FileCheck, Dog, Cat, Bird, Bug, 
   CheckCircle2, ArrowRight, ArrowLeft, Send, MapPin, PawPrint, User, Users 
 } from 'lucide-react';
+import { showAlert} from '@/lib/swal2'
+import axios from 'axios'
 
 const Services = () => {
   const { t, i18n } = useTranslation();
@@ -76,16 +78,68 @@ const Services = () => {
   const nextStep = () => setStep((s) => s + 1);
   const prevStep = () => setStep((s) => s - 1);
 
+  const resetForm = () => {
+    setFormData({
+      origin: '', destination: '', serviceType: t('Kargo Domestik'), handling: t('Jemput'), transport: t('Pesawat Terbang'),
+      petName: '', petDob: '', petColor: '', petSex: t('Laki-laki'), weight: '', microchip: '', breed: '', crateDim: '',
+      ownerName: '', ownerSex: t('Laki-laki'), ownerEmail: '', ownerPhone: '', originAddress: '',
+      receiverName: '', receiverSex: t('Laki-laki'), receiverEmail: '', receiverPhone: '', destAddress: ''
+    });
+    setStep(1);
+  };
+
+  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'https://darin-api.ddns.net';
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwVdS0yA22wesBnViyvCMfLcR5FRqWW_9GgMQENR3ezUmzeaNr2io7oaHX-P73Tvhjx/exec";
+    
+    
     try {
+      const apiPayload = {
+        owner_name: formData.ownerName,
+        owner_gender: formData.ownerSex === t('Laki-laki') ? 'male' : 'female',
+        owner_email: formData.ownerEmail,
+        owner_phone: formData.ownerPhone,
+        owner_address: formData.originAddress,
+
+        services_type: "pet_transport", // Sesuaikan jika dinamis
+        transport_mode: "airplane",
+        handling_method: formData.handling === t('Jemput') ? 'pickup' : 'dropoff',
+
+        recipient_name: formData.receiverName,
+        recipient_gender: formData.receiverSex === t('Laki-laki') ? 'male' : 'female',
+        recipient_email: formData.receiverEmail,
+        recipient_phone: formData.receiverPhone,
+        recipient_address: formData.destAddress,
+
+        pet_name: formData.petName,
+        pet_gender: formData.petSex === 'male' ? 'male' : 'female',
+        pet_color: formData.petColor,
+        pet_weight: parseFloat(formData.weight) || 0,
+        pet_microchip: formData.microchip,
+        pet_species: formData.breed,
+        pet_dob: formData.petDob,
+
+        crate_dimension: formData.crateDim,
+        origin_city_or_airport: formData.origin,
+        destination_city_or_airport: formData.destination
+      };
+      console.log("req:", apiPayload)
       const response = await fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(formData) });
-      if (response.ok) setSubmitted(true);
-      else alert("Error sending data.");
+      if (response.ok){
+        showAlert({ 
+        icon: 'success', title: "Updated", text:'User info updated', isSuccess: true, useTimer: true});
+        const responseAPI = await axios.post(`${apiBaseUrl}/api/book-order`, apiPayload);
+        if (responseAPI.status === 200 || responseAPI.status === 201) {
+          resetForm();
+        }
+        setSubmitted(true);
+      } 
+      else showAlert({ title: "Send Form", text: "Error sending data.", icon: 'error', });
     } catch (error) {
-      alert("Failed to connect to server.");
+      showAlert({ title: "Send Form", text: "Failed to connect to server.", icon: 'error', });
     } finally {
       setIsSubmitting(false);
     }
@@ -116,7 +170,7 @@ const Services = () => {
                 </Card>
               </DialogTrigger>
 
-              <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto rounded-[2rem] p-0 border-none shadow-2xl">
+              <DialogContent className="custom-scrollbar sm:max-w-[600px] max-h-[90vh] overflow-y-auto rounded-[2rem] p-0 border-none shadow-2xl">
                 {!submitted ? (
                   <div className="flex flex-col">
                     <div className="bg-[#00365c] p-8 text-white relative overflow-hidden">

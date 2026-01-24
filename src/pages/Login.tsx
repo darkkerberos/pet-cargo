@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
-import { Eye, EyeOff, Lock, User, ArrowRight, PawPrint } from "lucide-react";
+import { Eye, EyeOff, Lock, User, ArrowRight, PawPrint, ArrowLeft } from "lucide-react";
+import Swal from 'sweetalert2';
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -24,28 +25,55 @@ const LoginPage = () => {
     try {
       const response = await fetch(`${apiBaseUrl}/api/login`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           username_or_email: usernameOrEmail,
           password: password,
         }),
       });
 
+      const data = await response.json();
+
       if (!response.ok) {
-        throw new Error("Invalid credentials");
+        // 1. Tampilkan Swal Gagal
+        Swal.fire({
+          icon: 'error',
+          title: 'Login Gagal',
+          text: data.message || 'Email atau password salah!',
+          showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: true,
+        });
+        return;
       }
 
-      const data = await response.json();
       localStorage.setItem("authToken", data.token);
-      navigate("/admin");
+      localStorage.setItem("username", data.username);
+      Swal.fire({
+        icon: 'success',
+        title: 'Berhasil Masuk!',
+        text: 'Tunggu sebentar ya...',
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+        didOpen: () => { Swal.showLoading(); }
+      }).then(() => {
+        navigate('/admin');
+      });
+
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Login failed");
+      Swal.fire({
+        icon: 'warning',
+        title: 'Koneksi Bermasalah',
+        text: 'Gagal terhubung ke server API.',
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+      });
     } finally {
       setLoading(false);
     }
-  };
+  }
 
   return (
     <div className="min-h-screen w-full flex items-center justify-center bg-slate-50 relative overflow-hidden p-4">
@@ -63,7 +91,7 @@ const LoginPage = () => {
           <div className="bg-[#00365c] p-10 text-center text-white relative">
             <div className="bg-white w-20 h-20 rounded-3xl mx-auto flex items-center justify-center mb-4 shadow-lg rotate-3 group hover:rotate-0 transition-transform duration-500">
               <img
-                src="/assets/logo_pet_cargo.png"
+                src={`${import.meta.env.BASE_URL}assets/logo_pet_cargo.png`}
                 alt="Logo"
                 className="w-14 h-14 object-contain"
               />
@@ -114,7 +142,7 @@ const LoginPage = () => {
                 <label className="text-sm font-bold text-slate-700">
                   Password
                 </label>
-                {/* <button type="button" className="text-xs font-bold text-[#00365c] hover:underline">Lupa Password?</button> */}
+                <button onClick={() => navigate('/forgot-password')} type="button" className="text-xs font-bold text-[#00365c] hover:underline">Lupa Password?</button>
               </div>
               <div className="relative">
                 <Lock
@@ -156,18 +184,28 @@ const LoginPage = () => {
                 </div>
               )}
             </Button>
+            <Button
+              type="button"
+              disabled={isLoading}
+              onClick={() => navigate('/')}
+              className="w-full h-12 bg-[#00365c] hover:bg-[#002845] text-white rounded-xl font-bold text-lg shadow-lg shadow-[#00365c]/20 transition-all hover:-translate-y-1"
+            >
+              <div className="flex items-center gap-2">
+                <ArrowLeft size={18} />  Kembali Ke Landing Page 
+                </div>
+            </Button>
           </form>
           {/* Footer */}
-            <div className="text-center pt-4 border-t border-gray-200">
-              <p className="text-sm text-gray-500">
-                Secure admin access for Pet Cargo management
-              </p>
-              <div className="flex justify-center items-center gap-1 mt-2">
-                <PawPrint className="w-4 h-4 text-red-400" />
-                <span className="text-xs text-gray-400">Made with love for pets</span>
-                <PawPrint className="w-4 h-4 text-red-400" />
-              </div>
+          <div className="text-center pt-4 border-t border-gray-200">
+            <p className="text-sm text-gray-500">
+              Secure admin access for Pet Cargo management
+            </p>
+            <div className="flex justify-center items-center gap-1 mt-2">
+              <PawPrint className="w-4 h-4 text-red-400" />
+              <span className="text-xs text-gray-400">Made with love for pets</span>
+              <PawPrint className="w-4 h-4 text-red-400" />
             </div>
+          </div>
         </CardContent>
       </Card>
     </div>

@@ -34,6 +34,7 @@ import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size';
 
 // CSS Plugin
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
+import '@/assets/filepond.css'
 
 // REGISTER PLUGIN (Wajib panggil ini agar prop dikenal secara runtime)
 registerPlugin(
@@ -273,12 +274,12 @@ const Gallery = () => {
                                 <DialogTitle className="text-2xl font-black italic uppercase">Media Details</DialogTitle>
                             </DialogHeader>
 
-                            <div className="flex-1 overflow-y-auto p-8 space-y-8 no-scrollbar">
+                            <div className="flex-1 overflow-y-auto p-8 space-y-8 no-scrollbar ">
                                 {isDetailLoading ? (
                                     <div className="flex justify-center p-10"><Loader2 className="animate-spin text-[#00365c]" size={32} /></div>
                                 ) : selectedItem && (
                                     <>
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 ">
                                             <div className="space-y-3">
                                                 <Label className="text-[10px] font-black uppercase text-slate-400 block text-center">Current Image</Label>
                                                 <div className="rounded-[2rem] overflow-hidden h-64 bg-slate-50 border flex items-center justify-center">
@@ -383,7 +384,8 @@ const Gallery = () => {
                                 {isUploading ? <Loader2 className="animate-spin" /> : "POST TO GALLERY"}
                             </Button>
                         </div>
-                        <div className="lg:col-span-7 bg-white p-2 rounded-[2.5rem] shadow-sm border min-h-[400px]">
+                        <div className="lg:col-span-7 p-4 rounded-[2.5rem] bg-[#2b303b] flex items-center justify-center">
+                            <div className="w-full h-full min-h-[420px]" >
                             <FilePond 
                                 files={files} 
                                 onupdatefiles={setFiles} 
@@ -394,8 +396,14 @@ const Gallery = () => {
                                 imageResizeTargetWidth={1200}
                                 imageTransformOutputQuality={80}
                                 maxFileSize="10MB"
-                                labelIdle='Drag & Drop media atau <span class=filepond--label-action">Browse</span><br/><span className="text-[10px] opacity-50 uppercase font-bold tracking-widest">Images or Video Max 5 Files</span>' 
+                                imagePreviewHeight={380}
+                                styleLoadIndicatorPosition="center bottom"
+                                styleProgressIndicatorPosition="center bottom"
+                                styleButtonRemoveItemPosition="right top"
+                                className={"custom-"}
+                                labelIdle='Drag & Drop media atau <span class="filepond--label-action">Browse</span><br/><span className="text-[10px] opacity-50 uppercase font-bold tracking-widest">Images or Video Max 5 Files</span>' 
                             />
+                            </div>
                         </div>
                     </div>
                 </TabsContent>

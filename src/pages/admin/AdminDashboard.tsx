@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
   Users,
   LogOut,
@@ -18,25 +18,31 @@ import BookOrder from '@/pages/admin/BookOrder'
 import Gallery from '@/pages/admin/Gallery'
 import UserPage from '@/pages/admin/Users'
 import { motion, AnimatePresence } from 'framer-motion';
+import { showAlert } from '@/lib/swal2';
+import { isTokenExpired } from '@/lib/utils/auth';
+import axios from 'axios';
+import "./index.css";
 
 
 const AdminDashboard = () => {
-  const [activeTab, setActiveTab] = useState('orders')
+  const [activeTab, setActiveTab] = useState('profile')
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [loading, setLoading] = useState(false);
+  const capitalizeFirst = (str: string | null) => {
+    if (!str) return "";
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
+  const username = capitalizeFirst(localStorage.getItem("username"));
+  const firstChar = username ? username[0] : "";
   const navigate = useNavigate()
+  function getErrorMessage(error: unknown) {
+    if (error instanceof Error) return error.message;
+    return String(error);
+  }
+  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:7654";
 
   // Warna aksen OKLCH yang tadi
   const accentColor = "oklch(0.62 0.15 265.19)";
-
-  // ===============================
-  // TOKEN CHECK
-  // ===============================
-  const isTokenExpired = (token: string): boolean => {
-    try {
-      const payload = JSON.parse(atob(token.split('.')[1]))
-      return Date.now() >= payload.exp * 1000
-    } catch { return true }
-  }
 
   useEffect(() => {
     const token = localStorage.getItem('authToken')
@@ -47,18 +53,38 @@ const AdminDashboard = () => {
     }
   }, [navigate])
 
-  const handleLogout = () => {
-    localStorage.removeItem('authToken')
-    toast.success('Berhasil Logout')
-    navigate('/login')
+  const handleLogout = async () => {
+    setLoading(true);
+    try {
+     await axios.post(apiBaseUrl+'/api/logout');
+     await showAlert({
+        title: "Logout",
+        text: "Berhasil logout",
+        icon: "success",
+        isSuccess: true,
+        showConfirm: true,
+        targetPath: '/login',
+        useTimer: true,
+        navigateFunc: navigate,
+      })
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        console.log(err.response?.data);
+      }
+    } finally {
+      setLoading(false);
+      localStorage.removeItem('authToken')
+      toast.success("ini toast")
+      navigate('/login', { replace: true})
+    }
+    
   }
 
   const menuItems = [
     { id: 'profile', label: 'Pengaturan Profil', icon: User },
     { id: 'gallery', label: 'Galeri Foto', icon: ImageIcon },
     { id: 'orders', label: 'Pesanan Masuk', icon: FileText },
-    
-    // { id: 'users', label: 'Daftar Pengguna', icon: Users },
+    { id: 'users', label: 'Daftar Pengguna', icon: Users },
     
   ]
 
@@ -82,7 +108,7 @@ const AdminDashboard = () => {
         <div className="p-8 mb-4">
           <div className="flex items-center gap-4 group">
             <div className="p-2 bg-white/10 rounded-2xl backdrop-blur-md group-hover:bg-white/20 transition-all duration-300">
-                <img src="/assets/logo_pet_cargo.png" className="h-10 w-10 object-contain" alt="Logo" />
+                <img src={`${import.meta.env.BASE_URL}assets/logo_pet_cargo.png`} className="h-10 w-10 object-contain" alt="Logo" />
             </div>
             <div>
               <h1 className="font-black text-xl tracking-tighter leading-none">DARIN <span className="text-blue-400">ADMIN</span></h1>
@@ -104,7 +130,7 @@ const AdminDashboard = () => {
                   setActiveTab(item.id);
                   setSidebarOpen(false);
                 }}
-                className={`
+                className={` cursor-pointer
                   w-full flex items-center justify-between px-4 py-3.5 rounded-2xl transition-all duration-300 group
                   ${isActive 
                     ? 'bg-white text-[#00365c] shadow-[0_10px_20px_rgba(0,0,0,0.2)] scale-[1.02]' 
@@ -132,7 +158,7 @@ const AdminDashboard = () => {
           <div className="bg-white/5 rounded-3xl p-4 border border-white/10">
             <button
               onClick={handleLogout}
-              className="w-full flex items-center gap-4 px-4 py-3 rounded-2xl
+              className="cursor-pointer w-full flex items-center gap-4 px-4 py-3 rounded-2xl
                 text-blue-100/60 hover:bg-rose-500 hover:text-white transition-all duration-300 group shadow-sm"
             >
               <LogOut size={18} className="group-hover:rotate-12 transition-transform" />
@@ -146,7 +172,7 @@ const AdminDashboard = () => {
       <main className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
         
         {/* TOP NAVBAR */}
-        <header className="h-20 lg:h-24 px-6 lg:px-12 flex items-center justify-between bg-white/50 backdrop-blur-xl border-b border-slate-100 shrink-0">
+        <header className="shadow-2xl h-20 lg:h-24 px-6 lg:px-12 flex items-center justify-between bg-white/50 backdrop-blur-xl border-b border-slate-100 shrink-0">
           <div className="flex items-center gap-4">
             <button
               onClick={() => setSidebarOpen(true)}
@@ -171,10 +197,10 @@ const AdminDashboard = () => {
           {/* User Status Badge */}
           <div className="flex items-center gap-4 bg-white p-1.5 pr-4 rounded-full border border-slate-100 shadow-sm">
              <div className="h-8 w-8 rounded-full bg-slate-100 flex items-center justify-center text-[#00365c] font-black text-xs border border-slate-200">
-                AD
+                {firstChar}
              </div>
              <div className="hidden md:block">
-                <p className="text-[10px] font-bold text-slate-900 leading-none">Administrator</p>
+                <p className="text-[10px] font-bold text-slate-900 leading-none">{username}</p>
                 <p className="text-[9px] text-green-500 font-bold uppercase mt-0.5">Online</p>
              </div>
           </div>

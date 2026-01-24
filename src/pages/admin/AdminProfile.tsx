@@ -6,28 +6,21 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from "sonner";
 import { 
-  Loader2, Save, User, MapPin, Mail, 
-  Phone, Instagram, Camera, Globe, Info 
+  Loader2, Save, MapPin, Camera, Globe, Info, 
+  Plus, Trash2, ChevronDown
 } from 'lucide-react';
-
-interface ProfileData {
-  id: number;
-  name: string;
-  tagline: string;
-  address: string;
-  address_latlong: string;
-  email: string;
-  telephone: string;
-  whatsapp: string;
-  instagram_url: string;
-  logo_url: string;
-}
+import { ProfileData, ContactItem } from '@/types/profile';
+import MapPicker from '@/components/MapPicker';
+import { isMap } from 'util/types';
 
 const AdminProfile = () => {
   const [profile, setProfile] = useState<ProfileData | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [isMapChange, setMapChange] = useState(false);
+  const [tempLatlong, setTempLatlong] = useState('');
   const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:7654';
+  
 
   useEffect(() => {
     fetchProfile();
@@ -39,6 +32,7 @@ const AdminProfile = () => {
       if (!response.ok) throw new Error('Gagal mengambil data profil');
       const data: ProfileData = await response.json();
       setProfile(data);
+      setTempLatlong(data.address_latlong)
     } catch (err) {
       toast.error("Error", { description: err instanceof Error ? err.message : 'Terjadi kesalahan' });
     } finally {
@@ -50,6 +44,8 @@ const AdminProfile = () => {
     if (!profile) return;
     setSaving(true);
     try {
+      const body = JSON.stringify(profile)
+      console.log(body)
       const token = localStorage.getItem('authToken');
       const response = await fetch(`${apiBaseUrl}/api/profile`, {
         method: 'PUT',
@@ -68,8 +64,31 @@ const AdminProfile = () => {
     }
   };
 
-  const handleChange = (field: keyof ProfileData, value: string) => {
+  const handleChange = (field: keyof ProfileData, value: any) => {
+    if (profile?.address_latlong) {
+      setMapChange(true)
+    }
     if (profile) setProfile({ ...profile, [field]: value });
+  };
+
+  // --- LOGIKA TABEL KONTAK ---
+  const addContact = () => {
+    if (!profile) return;
+    const newContact: ContactItem = { type: 'whatsapp', label: '', value: '' };
+    setProfile({ ...profile, contacts: [...profile.contacts, newContact] });
+  };
+
+  const removeContact = (index: number) => {
+    if (!profile) return;
+    const updatedContacts = profile.contacts.filter((_, i) => i !== index);
+    setProfile({ ...profile, contacts: updatedContacts });
+  };
+
+  const updateContact = (index: number, field: keyof ContactItem, value: string) => {
+    if (!profile) return;
+    const updatedContacts = [...profile.contacts];
+    updatedContacts[index] = { ...updatedContacts[index], [field]: value };
+    setProfile({ ...profile, contacts: updatedContacts });
   };
 
   if (loading) {
@@ -82,17 +101,17 @@ const AdminProfile = () => {
   }
 
   return (
-    <div className="max-w-5xl animate-in fade-in duration-700">
-      {/* Page Header */}
+    <div className="max-w-6xl animate-in fade-in duration-700 pb-20">
+      {/* Header Tetap Sama */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
-        <div>
-          <h2 className="text-sm font-bold text-[#00365c] uppercase tracking-[0.2em] mb-2">Konfigurasi Sistem</h2>
+        <div className="flex flex-col gap-2">
+          <h2 className="text-sm font-bold text-[#00365c] uppercase tracking-[0.2em] opacity-60">Konfigurasi Sistem</h2>
           <h1 className="text-4xl font-black text-slate-900 tracking-tighter">Profil Perusahaan</h1>
         </div>
         <Button
           onClick={handleSave}
           disabled={saving}
-          className="bg-[#00365c] hover:bg-[#002845] text-white px-8 h-12 rounded-2xl shadow-xl shadow-[#00365c]/20 transition-all hover:-translate-y-1 active:scale-95"
+          className="bg-[#00365c] hover:bg-[#002845] text-white px-8 h-12 rounded-2xl shadow-xl shadow-[#00365c]/20"
         >
           {saving ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Save className="mr-2 h-4 w-4" />}
           Simpan Perubahan
@@ -100,173 +119,178 @@ const AdminProfile = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        
-        {/* Left Column: Logo & Branding */}
+        {/* Kolom Kiri: Branding (Logo & Info) */}
         <div className="lg:col-span-1 space-y-6">
-          <Card className="border-none shadow-sm bg-white rounded-[2rem] overflow-hidden">
-            <CardContent className="p-8">
-              <Label className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-6 block text-center">Logo Instansi</Label>
-              
-              <div className="relative group mx-auto w-40 h-40">
-                <div className="w-full h-full rounded-[2.5rem] bg-slate-50 border-2 border-dashed border-slate-200 flex items-center justify-center overflow-hidden transition-all group-hover:border-[#00365c]/30">
+          <Card className="border-none shadow-sm bg-white rounded-[2rem] p-8">
+              <Label className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-6 block text-center">Logo Perusahaan</Label>
+              <div className="relative group mx-auto w-40 h-40 mb-6">
+                <div className="w-full h-full rounded-[2.5rem] bg-slate-50 border-2 border-dashed border-slate-200 flex items-center justify-center overflow-hidden">
                   {profile?.logo_url ? (
                     <img src={profile.logo_url} alt="Logo" className="w-full h-full object-contain p-4" />
                   ) : (
                     <Camera className="h-10 w-10 text-slate-300" />
                   )}
                 </div>
-                <label htmlFor="logo-upload" className="absolute -bottom-2 -right-2 bg-white shadow-xl p-3 rounded-2xl cursor-pointer hover:bg-slate-50 transition-colors border border-slate-100">
-                  <Camera size={20} className="text-[#00365c]" />
-                  <input 
-                    id="logo-upload" 
-                    type="file" 
-                    className="hidden" 
-                    accept="image/*"
-                    onChange={(e) => {
-                      const file = e.target.files?.[0];
-                      if (file) {
-                        const reader = new FileReader();
-                        reader.onload = (ev) => handleChange('logo_url', ev.target?.result as string);
-                        reader.readAsDataURL(file);
-                      }
-                    }}
+              </div>
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <Label className="text-xs font-bold text-slate-500 uppercase ml-1">Nama Perusahaan</Label>
+                  <Input 
+                    value={profile?.name || ''} 
+                    onChange={(e) => handleChange('name', e.target.value)}
+                    className="bg-slate-50 border-none rounded-xl h-11 text-sm focus-visible:ring-1 focus-visible:ring-[#00365c]"
                   />
-                </label>
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-xs font-bold text-slate-500 uppercase ml-1">Tagline</Label>
+                  <Textarea 
+                    value={profile?.tagline || ''} 
+                    onChange={(e) => handleChange('tagline', e.target.value)}
+                    className="bg-slate-50 border-none rounded-xl text-sm focus-visible:ring-1 focus-visible:ring-[#00365c] min-h-[80px] resize-none"
+                  />
+                </div>
               </div>
-              
-              <div className="mt-8 space-y-4 text-center">
-                <h3 className="font-bold text-lg text-slate-900 leading-tight">{profile?.name || 'Nama Perusahaan'}</h3>
-                <p className="text-sm text-slate-400 italic">"{profile?.tagline || 'Tagline belum diatur'}"</p>
-              </div>
-            </CardContent>
           </Card>
-
+          
           <div className="bg-blue-50/50 p-6 rounded-[2rem] border border-blue-100/50">
-            <div className="flex gap-3 text-blue-600 mb-2">
-              <Info size={18} />
-              <span className="text-xs font-bold uppercase tracking-wider">Tips</span>
-            </div>
-            <p className="text-xs text-blue-600/70 leading-relaxed">
-              Data yang Anda ubah di sini akan langsung sinkron dengan informasi di Landing Page (Footer, Header, & Kontak).
+            <div className="flex gap-3 text-blue-600 mb-2 font-bold uppercase text-[10px] tracking-widest"><Info size={14}/> Tips</div>
+            <p className="text-[11px] text-blue-600/70 leading-relaxed">
+              Gunakan tabel kontak untuk menambahkan banyak admin WhatsApp atau Email. Field ini akan otomatis terfilter di Landing Page.
             </p>
           </div>
         </div>
 
-        {/* Right Column: Detailed Forms */}
+        {/* Kolom Kanan: Alamat & Tabel Kontak */}
         <div className="lg:col-span-2 space-y-6">
-          <Card className="border-none shadow-sm bg-white rounded-[2rem]">
-            <CardContent className="p-8 space-y-8">
-              
-              {/* Branding Section */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <Label className="text-xs font-bold uppercase tracking-widest text-slate-500 ml-1">Nama Perusahaan</Label>
-                  <div className="relative">
-                    <Globe className="absolute left-4 top-3.5 text-slate-300" size={18} />
-                    <Input
-                      value={profile?.name || ''}
-                      onChange={(e) => handleChange('name', e.target.value)}
-                      className="pl-12 h-12 rounded-xl bg-slate-50 border-none focus-visible:ring-2 focus-visible:ring-[#00365c] font-medium"
-                    />
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <Label className="text-xs font-bold uppercase tracking-widest text-slate-500 ml-1">Tagline</Label>
-                  <Input
-                    value={profile?.tagline || ''}
-                    onChange={(e) => handleChange('tagline', e.target.value)}
-                    className="h-12 rounded-xl bg-slate-50 border-none focus-visible:ring-2 focus-visible:ring-[#00365c] font-medium"
-                  />
-                </div>
+          {/* Alamat Section */}
+          <Card className="border-none shadow-sm bg-white rounded-[2rem] p-8">
+            <h3 className="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2">
+               <MapPin size={20} className="text-[#00365c]" /> Alamat & Maps
+            </h3>
+            <div className="space-y-4 grid md:grid-cols-2 sm:grid-cols-1 gap-4">
+              <div className="space-y-1">
+                <Label className="text-[10px] uppercase font-bold text-slate-400 ml-1">Alamat</Label>
+              <Textarea 
+                value={profile?.address || ''} 
+                onChange={(e) => handleChange('address', e.target.value)}
+                placeholder="Alamat Lengkap..."
+                className="bg-slate-50 border-none rounded-xl text-sm min-h-[80px]"
+              />
               </div>
-
-              {/* Contact Section */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
-                <div className="space-y-2">
-                  <Label className="text-xs font-bold uppercase tracking-widest text-slate-500 ml-1">Email Publik</Label>
-                  <div className="relative">
-                    <Mail className="absolute left-4 top-3.5 text-slate-300" size={18} />
-                    <Input
-                      type="email"
-                      value={profile?.email || ''}
-                      onChange={(e) => handleChange('email', e.target.value)}
-                      className="pl-12 h-12 rounded-xl bg-slate-50 border-none focus-visible:ring-2 focus-visible:ring-[#00365c] font-medium"
-                    />
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <Label className="text-xs font-bold uppercase tracking-widest text-slate-500 ml-1">WhatsApp</Label>
-                  <div className="relative">
-                    <Phone className="absolute left-4 top-3.5 text-slate-300" size={18} />
-                    <Input
-                      value={profile?.whatsapp || ''}
-                      onChange={(e) => handleChange('whatsapp', e.target.value)}
-                      className="pl-12 h-12 rounded-xl bg-slate-50 border-none focus-visible:ring-2 focus-visible:ring-[#00365c] font-medium"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* Socials & Other */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
-                <div className="space-y-2">
-                  <Label className="text-xs font-bold uppercase tracking-widest text-slate-500 ml-1">Instagram URL</Label>
-                  <div className="relative">
-                    <Instagram className="absolute left-4 top-3.5 text-slate-300" size={18} />
-                    <Input
-                      value={profile?.instagram_url || ''}
-                      onChange={(e) => handleChange('instagram_url', e.target.value)}
-                      className="pl-12 h-12 rounded-xl bg-slate-50 border-none focus-visible:ring-2 focus-visible:ring-[#00365c] font-medium"
-                      placeholder="https://instagram.com/..."
-                    />
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <Label className="text-xs font-bold uppercase tracking-widest text-slate-500 ml-1">Nomor Telepon</Label>
-                  <Input
-                    value={profile?.telephone || ''}
-                    onChange={(e) => handleChange('telephone', e.target.value)}
-                    className="h-12 rounded-xl bg-slate-50 border-none focus-visible:ring-2 focus-visible:ring-[#00365c] font-medium"
-                  />
-                </div>
-              </div>
-
-              {/* Address Section */}
-              <div className="space-y-6 pt-4 border-t border-slate-100">
-                <div className="space-y-2">
-                  <Label className="text-xs font-bold uppercase tracking-widest text-slate-500 ml-1">Alamat Kantor</Label>
-                  <div className="relative">
-                    <MapPin className="absolute left-4 top-4 text-slate-300" size={18} />
-                    <Textarea
-                      value={profile?.address || ''}
-                      onChange={(e) => handleChange('address', e.target.value)}
-                      className="pl-12 rounded-xl bg-slate-50 border-none focus-visible:ring-2 focus-visible:ring-[#00365c] font-medium min-h-[100px]"
-                      placeholder="Tulis alamat lengkap..."
-                    />
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <Label className="text-xs font-bold uppercase tracking-widest text-slate-500 ml-1">Koordinat (Lat, Long)</Label>
-                  <Input
-                    value={profile?.address_latlong || ''}
+              <div className="space-y-1">
+                   <Label className="text-[10px] uppercase font-bold text-slate-400 ml-1">Koordinat (Lat, Long)</Label>
+                   <Input 
+                    value={profile?.address_latlong || ''} 
                     onChange={(e) => handleChange('address_latlong', e.target.value)}
-                    className="h-12 rounded-xl bg-slate-50 border-none focus-visible:ring-2 focus-visible:ring-[#00365c] font-medium text-xs"
-                    placeholder="-6.1234, 106.1234"
+                    className="bg-slate-50 border-none rounded-xl h-10 text-xs"
+                    placeholder="-6.123, 106.123"
                   />
-                  <div className="h-[250px] w-full bg-slate-200">
-                    <iframe
+                  { isMapChange ? <span className='text-[10px] font-light text-slate-400 ml-1'>Latlong awal: { tempLatlong }</span>: ''}
+                  
+                </div>
+                <div className="md:col-span-2 h-[250px] w-full bg-slate-200 overflow-hidden">
+                  <MapPicker 
+                    value={profile?.address_latlong || ''} 
+                    onChange={(newVal) => handleChange('address_latlong', newVal)} 
+                  />
+                    {/* <iframe
                       src={`https://www.google.com/maps?q=${profile?.address_latlong}&hl=id&z=16&output=embed`}
                       width="100%"
                       height="100%"
                       style={{ border: 0 }}
                       allowFullScreen
                       loading="lazy"
-                    ></iframe>
+                    ></iframe> */}
                   </div>
-                </div>
-              </div>
+            </div>
+          </Card>
 
-            </CardContent>
+          {/* Tabel Kontak Section */}
+          <Card className="border-none shadow-sm bg-white rounded-[2rem] p-8">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-lg font-bold text-slate-800">Daftar Kontak Informasi</h3>
+              <Button 
+                onClick={addContact}
+                variant="outline" 
+                className="rounded-xl border-dashed border-2 text-[#00365c] hover:bg-slate-50 gap-2 h-9 text-xs font-bold"
+              >
+                <Plus size={16} /> Tambah Kontak
+              </Button>
+            </div>
+
+            <div className="overflow-x-auto">
+              <table className="w-full text-left border-separate border-spacing-y-2">
+                <thead>
+                  <tr className="text-slate-400 text-[10px] uppercase tracking-widest">
+                    <th className="px-4 pb-2">Tipe</th>
+                    <th className="px-4 pb-2">Label (Nama Admin)</th>
+                    <th className="px-4 pb-2">Nilai (No/Email)</th>
+                    <th className="px-4 pb-2 w-10"></th>
+                  </tr>
+                </thead>
+                <tbody className="space-y-4">
+                  {profile?.contacts.map((contact, index) => (
+                    <tr key={index} className="group animate-in slide-in-from-top-1 duration-300">
+                      <td className="px-2">
+                        <select 
+                          value={['whatsapp', 'telephone', 'email', 'instagram'].includes(contact.type) ? contact.type : 'other'}
+                          onChange={(e) => updateContact(index, 'type', e.target.value === 'other' ? '' : e.target.value)}
+                          className="w-full h-11 bg-slate-50 border-none rounded-xl text-sm px-3 focus:ring-1 focus:ring-[#00365c] appearance-none"
+                        >
+                          <option value="whatsapp">WhatsApp</option>
+                          <option value="telephone">Telepon</option>
+                          <option value="email">Email</option>
+                          <option value="instagram">Instagram</option>
+                          <option value="other">Lainnya...</option>
+                        </select>
+                        {/* Munculkan input manual jika 'other' atau type tidak ada di list standar */}
+                        {!['whatsapp', 'telephone', 'email', 'instagram'].includes(contact.type) && (
+                          <Input 
+                            value={contact.type}
+                            onChange={(e) => updateContact(index, 'type', e.target.value)}
+                            placeholder="Ketik tipe..."
+                            className="mt-2 h-8 text-[10px] bg-white border-slate-200 rounded-lg"
+                          />
+                        )}
+                      </td>
+                      <td className="px-2">
+                        <Input 
+                          value={contact.label}
+                          onChange={(e) => updateContact(index, 'label', e.target.value)}
+                          placeholder="Misal: Admin Support"
+                          className="h-11 bg-slate-50 border-none rounded-xl text-sm"
+                        />
+                      </td>
+                      <td className="px-2">
+                        <Input 
+                          value={contact.value}
+                          onChange={(e) => updateContact(index, 'value', e.target.value)}
+                          placeholder="No telp / email..."
+                          className="h-11 bg-slate-50 border-none rounded-xl text-sm"
+                        />
+                      </td>
+                      <td className="px-2 text-right">
+                        <Button 
+                          variant="ghost" 
+                          size="icon" 
+                          onClick={() => removeContact(index)}
+                          className="text-slate-300 hover:text-red-500 hover:bg-red-50 rounded-xl transition-colors"
+                        >
+                          <Trash2 size={18} />
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
+                  {profile?.contacts.length === 0 && (
+                    <tr>
+                      <td colSpan={4} className="text-center py-10 text-slate-400 text-sm italic">
+                        Belum ada kontak. Klik "Tambah Kontak" untuk memulai.
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
           </Card>
         </div>
       </div>

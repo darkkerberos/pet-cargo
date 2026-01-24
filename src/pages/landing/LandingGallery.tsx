@@ -1,32 +1,54 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, ImageOff, Maximize2, X } from 'lucide-react';
 import { Button } from "@/components/ui/button"; // Asumsi pakai Shadcn
+import { useTranslation } from "react-i18next";
+
 
 const LandingGallery = () => {
+  const { t, i18n } = useTranslation();
   const [data, setData] = useState<GalleryItem[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalRow, setTotalRow] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedImg, setSelectedImg] = useState<string | null>(null);
-  
+
+  useEffect(() => {
+    i18n.addResourceBundle(
+      "en",
+      "translation",
+      {
+        "Galeri Kami": "Our Gallery",
+        "Halaman": "Page",
+        "dari": "of",
+        "Belum ada media": "No media available",
+        "Sepertinya gallery masih kosong. Silakan kembali lagi nanti untuk melihat koleksi terbaru kami.": 
+        "It looks like the gallery is still empty. Please check back later to see our latest collection.",
+
+      },
+      true,
+      true
+    );
+  }, [i18n]);
+
   const itemsPerPage = 10;
-  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'http://103.56.148.153:7654';
+  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'https://darin-api.ddns.net';
 
   interface GalleryItem {
     id: number;
     title: string;
     thumbnail_url: string;
   }
+  const gridRef = useRef<HTMLDivElement>(null);
 
   const fetchGallery = async (page: number) => {
     setIsLoading(true);
     try {
       const response = await fetch(
-        apiBaseUrl+`/api/gallery/search?page=${page}&item_per_page=${itemsPerPage}`
+        apiBaseUrl + `/api/gallery/search?page=${page}&item_per_page=${itemsPerPage}`
       );
       const result = await response.json();
-      
+
       // Update state berdasarkan struktur respon yang kamu kasih
       setData(result.data || []);
       setTotalRow(result.total_row || 0);
@@ -39,16 +61,20 @@ const LandingGallery = () => {
 
   useEffect(() => {
     fetchGallery(currentPage);
+    gridRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
   }, [currentPage]);
 
   const totalPages = Math.ceil(totalRow / itemsPerPage);
 
   return (
-    <section id="galeri" className="py-20 px-4 bg-white dark:bg-slate-950 min-h-screen">
+    <section id="galeri" ref={gridRef} className="scroll-mt-24 pt-32 py-20 px-4 bg-[#0f1f36] dark:bg-slate-950 min-h-screen">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-[oklch(0.62_0.15_265.19)] mb-4 tracking-tight">Our Gallery</h2>
+          <h2 className="text-4xl font-bold text-[oklch(0.62_0.15_265.19)] mb-4 tracking-tight">{t('Galeri Kami')}</h2>
           <div className="h-1.5 w-16 bg-blue-600 mx-auto rounded-full" />
         </div>
 
@@ -59,8 +85,35 @@ const LandingGallery = () => {
           </div>
         ) : data.length > 0 ? (
           <>
+            {/* Pagination Controls */}
+            <div className="mt-16 flex items-center justify-center gap-4">
+              <Button
+                variant="outline"
+                size="icon"
+                className="cursor-pointer rounded-full w-12 h-12 border-slate-200 hover:bg-blue-50 hover:text-blue-600 disabled:opacity-30"
+                onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                disabled={currentPage === 1}
+              >
+                <ChevronLeft className="w-6 h-6" />
+              </Button>
+
+              <div className="flex items-center gap-2">
+                <span className="text-sm font-bold text-[oklch(0.62_0.15_265.19)]">{t('Halaman')} {currentPage}</span>
+                <span className="text-sm text-slate-400">{t('dari')} {totalPages || 1}</span>
+              </div>
+
+              <Button
+                variant="outline"
+                size="icon"
+                className="cursor-pointer rounded-full w-12 h-12 border-slate-200 hover:bg-blue-50 hover:text-blue-600 disabled:opacity-30"
+                onClick={() => setCurrentPage(p => p + 1)}
+                disabled={currentPage >= totalPages}
+              >
+                <ChevronRight className="w-6 h-6" />
+              </Button>
+            </div>
             {/* Masonry Grid */}
-            <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
+            <div className="my-16 columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
               {data.map((item) => (
                 <motion.div
                   key={item.id}
@@ -69,8 +122,8 @@ const LandingGallery = () => {
                   className="relative group overflow-hidden rounded-2xl border border-slate-100 shadow-sm cursor-pointer"
                   onClick={() => setSelectedImg(item.thumbnail_url)}
                 >
-                  <img 
-                    src={item.thumbnail_url} 
+                  <img
+                    src={item.thumbnail_url}
                     alt={item.title}
                     className="w-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
@@ -87,22 +140,22 @@ const LandingGallery = () => {
               <Button
                 variant="outline"
                 size="icon"
-                className="rounded-full w-12 h-12 border-slate-200 hover:bg-blue-50 hover:text-blue-600 disabled:opacity-30"
+                className="cursor-pointer rounded-full w-12 h-12 border-slate-200 hover:bg-blue-50 hover:text-blue-600 disabled:opacity-30"
                 onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                 disabled={currentPage === 1}
               >
                 <ChevronLeft className="w-6 h-6" />
               </Button>
-              
+
               <div className="flex items-center gap-2">
-                <span className="text-sm font-bold text-[oklch(0.62_0.15_265.19)]">Page {currentPage}</span>
-                <span className="text-sm text-slate-400">of {totalPages || 1}</span>
+                <span className="text-sm font-bold text-[oklch(0.62_0.15_265.19)]">{t('Halaman')} {currentPage}</span>
+                <span className="text-sm text-slate-400">{t('dari')} {totalPages || 1}</span>
               </div>
 
               <Button
                 variant="outline"
                 size="icon"
-                className="rounded-full w-12 h-12 border-slate-200 hover:bg-blue-50 hover:text-blue-600 disabled:opacity-30"
+                className="cursor-pointer rounded-full w-12 h-12 border-slate-200 hover:bg-blue-50 hover:text-blue-600 disabled:opacity-30"
                 onClick={() => setCurrentPage(p => p + 1)}
                 disabled={currentPage >= totalPages}
               >
@@ -111,8 +164,7 @@ const LandingGallery = () => {
             </div>
           </>
         ) : (
-          /* Empty State - Tampilan Bagus */
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             className="flex flex-col items-center justify-center py-20 text-center"
@@ -120,9 +172,9 @@ const LandingGallery = () => {
             <div className="w-24 h-24 bg-slate-50 rounded-full flex items-center justify-center mb-6">
               <ImageOff className="w-10 h-10 text-slate-300" />
             </div>
-            <h3 className="text-xl font-bold text-[oklch(0.62_0.15_265.19)] mb-2">Belum ada media</h3>
+            <h3 className="text-xl font-bold text-[oklch(0.62_0.15_265.19)] mb-2">{t('Belum ada media')}</h3>
             <p className="text-slate-500 max-w-xs">
-              Sepertinya gallery masih kosong. Silakan kembali lagi nanti untuk melihat koleksi terbaru kami.
+              {t('Sepertinya gallery masih kosong. Silakan kembali lagi nanti untuk melihat koleksi terbaru kami.')}
             </p>
           </motion.div>
         )}
