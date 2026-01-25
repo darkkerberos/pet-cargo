@@ -110,7 +110,7 @@ const Footer = ({ profile } : { profile: ProfileData | null}) => {
               </a>
               ))}
               {waContacts.map((item, idx) => (
-              <a key={`ig-${idx}`} href={`https://wa.me/${formatWhatsapp(item.value)}`} className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-green-500 hover:text-white transition-all duration-300">
+              <a key={`ig-${idx}`} href={`https://wa.me/${formatWhatsapp(item.value)}`} aria-label="Hubungi kami melalui WhatsApp" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-green-500 hover:text-white transition-all duration-300">
                 <SiWhatsapp className="h-5 w-5" />
               </a>
               ))}
@@ -207,6 +207,7 @@ const Footer = ({ profile } : { profile: ProfileData | null}) => {
       <a
         href={`https://wa.me/${waNumber}`}
         target="_blank"
+        aria-label="Hubungi kami melalui WhatsApp"
         rel="noopener noreferrer"
         className="fixed bottom-6 right-6 z-50 group"
       >

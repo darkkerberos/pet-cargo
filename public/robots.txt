@@ -6,4 +6,4 @@ Disallow: /#/login
 Disallow: /#/forgot-password
 Disallow: /#/reset-password
 
-Sitemap: https://darkkerberos.github.io/pet-cargo/sitemap.xml
+Sitemap: https://www.darin-pet-transport.com/sitemap.xml

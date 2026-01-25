@@ -77,6 +77,9 @@ const Hero = () => {
                 src={`${import.meta.env.BASE_URL}assets/generated/hero-pets.dim_800x600.jpg`}
                 alt="Happy pets ready for transport" 
                 className="w-full h-auto object-cover"
+                width={800}
+                height={600}
+                fetchPriority="high"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
             </div>
