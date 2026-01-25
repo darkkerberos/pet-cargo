@@ -120,7 +120,7 @@ const Header = ({ profile } : { profile: ProfileData | null}) => {
             >
               <img
                 src={`${import.meta.env.BASE_URL}${profile?.logo_url}`}
-                alt="Logo"
+                alt="Logo" loading="lazy"
                 className="h-full w-full object-contain"
               />
             </div>

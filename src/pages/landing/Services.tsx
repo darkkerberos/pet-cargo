@@ -130,7 +130,7 @@ const Services = () => {
       const response = await fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(formData) });
       if (response.ok){
         showAlert({ 
-        icon: 'success', title: "Updated", text:'User info updated', isSuccess: true, useTimer: true});
+        icon: 'success', title: "Thank you!", text:'your form is submitted', isSuccess: true, useTimer: true});
         const responseAPI = await axios.post(`${apiBaseUrl}/api/book-order`, apiPayload);
         if (responseAPI.status === 200 || responseAPI.status === 201) {
           resetForm();

@@ -134,7 +134,7 @@ const Contact = ({ profile } : { profile: ProfileData | null}) => {
                   <Clock className="w-6 h-6 text-green-400" />
                 </div>
                 <div className="h-[250px] w-full bg-slate-200">
-                  <iframe
+                  <iframe title="Peta Kantor Darin Pet Transport"
                     src={`https://maps.google.com/maps?q=${profile?.address_latlong}&z=15&output=embed`}
                     width="100%" height="100%" style={{ border: 0 }} allowFullScreen loading="lazy"
                   ></iframe>

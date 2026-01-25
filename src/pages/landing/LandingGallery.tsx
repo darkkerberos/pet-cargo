@@ -125,6 +125,7 @@ const LandingGallery = () => {
                   <img
                     src={item.thumbnail_url}
                     alt={item.title}
+                    loading="lazy"
                     className="w-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-6">
@@ -195,6 +196,7 @@ const LandingGallery = () => {
               animate={{ scale: 1 }}
               src={selectedImg}
               className="max-w-full max-h-[90vh] rounded-lg shadow-2xl"
+              loading='lazy'
             />
             <button className="absolute top-8 right-8 text-white/50 hover:text-white transition-colors">
               <X size={40} />

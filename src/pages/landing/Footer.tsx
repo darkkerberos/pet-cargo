@@ -86,7 +86,7 @@ const Footer = ({ profile } : { profile: ProfileData | null}) => {
               <div className="bg-white p-1.5 rounded-xl shadow-lg">
                 <img 
                   src={`${import.meta.env.BASE_URL}${profile?.logo_url}`}
-                  alt="Logo" 
+                  alt="Logo" loading='lazy'
                   className="h-10 w-10 object-contain"
                 />
               </div>
