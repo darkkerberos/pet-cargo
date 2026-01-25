@@ -74,7 +74,8 @@ const GalleryPage = ({ profile } : { profile: ProfileData | null}) => {
   );
 }
 
-const basename = import.meta.env.MODE === 'production' ? '/pet-cargo' : '';
+// const basename = import.meta.env.MODE === 'production' ? '/pet-cargo' : '';
+const basename =  '';
 
 function App() {
   const [profile, setProfile] = useState<ProfileData | null>(null);

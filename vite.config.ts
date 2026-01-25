@@ -6,7 +6,8 @@ import svgr from 'vite-plugin-svgr';
 
 export default defineConfig(({ mode }: ConfigEnv): UserConfig => ({
   // Otomatis deteksi mode production untuk GitHub Pages
-  base: mode === 'production' ? '/pet-cargo/' : '/',
+  // base: mode === 'production' ? '/pet-cargo/' : '/',
+  base: '/',
   
   logLevel: 'error',
   build: {
