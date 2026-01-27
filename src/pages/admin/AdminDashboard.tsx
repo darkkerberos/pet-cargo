@@ -74,7 +74,7 @@ const AdminDashboard = () => {
     } finally {
       setLoading(false);
       localStorage.removeItem('authToken')
-      toast.success("ini toast")
+      toast.success("berhasil logout")
       navigate('/login', { replace: true})
     }
     
