@@ -13,7 +13,6 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => ({
   build: {
     emptyOutDir: true,
     sourcemap: false,
-    // Diubah ke true agar file lebih ringan (penting untuk production)
     minify: mode === 'production', 
     outDir: 'dist',
   },

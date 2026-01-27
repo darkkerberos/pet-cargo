@@ -78,7 +78,7 @@ const Contact = ({ profile } : { profile: ProfileData | null}) => {
               
               {/* Render Semua WhatsApp */}
               {waContacts.map((item, idx) => (
-                <a key={`wa-${idx}`} href={`https://wa.me/${formatWhatsapp(item.value.replace(/\D/g, ''))}`} target="_blank" rel="noopener noreferrer"
+                <a key={`wa-${idx}`} href={`https://wa.me/${formatWhatsapp(item.value.replace(/\D/g, ''))}`} aria-label="Hubungi kami melalui WhatsApp" target="_blank" rel="noopener noreferrer"
                   className="flex items-center p-4 bg-white rounded-2xl shadow-sm border border-slate-100 hover:shadow-md hover:-translate-y-1 transition-all group">
                   <div className="bg-green-50 text-green-600 p-4 rounded-xl mr-5 group-hover:scale-110 transition-transform">
                     <SiWhatsapp className="w-5 h-5" />
@@ -93,6 +93,7 @@ const Contact = ({ profile } : { profile: ProfileData | null}) => {
               {/* Render Semua Telepon */}
               {phoneContacts.map((item, idx) => (
                 <a key={`phone-${idx}`} href={`tel:${item.value}`}
+                  aria-label="Hubungi kami melalui Telepon"
                   className="flex items-center p-4 bg-white rounded-2xl shadow-sm border border-slate-100 hover:shadow-md hover:-translate-y-1 transition-all group">
                   <div className="bg-blue-50 text-blue-600 p-4 rounded-xl mr-5 group-hover:scale-110 transition-transform">
                     <Phone className="w-5 h-5" />
@@ -133,7 +134,7 @@ const Contact = ({ profile } : { profile: ProfileData | null}) => {
                   <Clock className="w-6 h-6 text-green-400" />
                 </div>
                 <div className="h-[250px] w-full bg-slate-200">
-                  <iframe
+                  <iframe title="Peta Kantor Darin Pet Transport"
                     src={`https://maps.google.com/maps?q=${profile?.address_latlong}&z=15&output=embed`}
                     width="100%" height="100%" style={{ border: 0 }} allowFullScreen loading="lazy"
                   ></iframe>
@@ -197,6 +198,7 @@ const Contact = ({ profile } : { profile: ProfileData | null}) => {
 
                 <Button 
                   onClick={handleSendWhatsApp}
+                  aria-label="Hubungi kami melalui WhatsApp"
                   className="w-full h-14 bg-[#00365c] hover:bg-[#002845] text-white rounded-2xl text-lg font-bold shadow-lg shadow-blue-900/20 transition-all hover:-translate-y-1 active:scale-95 flex gap-3"
                 >
                   <SiWhatsapp className="w-6 h-6" />

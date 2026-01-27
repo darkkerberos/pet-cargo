@@ -71,8 +71,8 @@ const About = () => {
           <div className="relative order-2 lg:order-1">
             <div className="relative z-10 rounded-[2.5rem] overflow-hidden shadow-2xl shadow-slate-200">
               <img 
-                src={`${import.meta.env.BASE_URL}assets/generated/about-team.png`}
-                alt="Tim Darin Pets Transport" 
+                src={`${import.meta.env.BASE_URL}assets/generated/about-team.webp`}
+                alt="Tim Darin Pets Transport" loading="lazy"
                 className="w-full aspect-[4/5] object-cover hover:scale-105 transition-transform duration-700"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#00365c]/60 to-transparent" />
